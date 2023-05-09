@@ -69,7 +69,6 @@ void Entity::attack(Entity& other) {
 }
 
 
-
 Player::Player(int x, int y) : Entity(x, y, '@', 100, 50) {}
 
 // Moves the player, checking for collision with walls and enemies
