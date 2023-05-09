@@ -5,8 +5,8 @@
 #include <string>
 #include <Windows.h>
 
-#include "entities.hpp"
-#include "map.hpp"
+#include "roguelike/entities.hpp"
+#include "roguelike/map.hpp"
 
 
 // Generate a random number between min and max
