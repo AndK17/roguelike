@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+set(CMAKE_CXX_STANDARD 20)
+project(roguelike)
+add_executable(roguelike main.cpp)
+add_library(entities STATIC entities.cpp)
+target_link_libraries(roguelike entities)
