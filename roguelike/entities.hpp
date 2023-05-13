@@ -1,4 +1,9 @@
 #include <vector>
+#include <string>
+
+static char playerSymbol = '@';
+static char enemySymbol = 'E';
+static char deathSymbol = 'X';
 
 class Entity {
 public:
@@ -19,7 +24,7 @@ public:
     void setHealth(int health);
 
     int getDamage() const;
-    void setDamage(int health);
+    void setDamage(int damage);
 
     virtual void move(int dx, int dy);
 
@@ -35,18 +40,20 @@ class Player : public Entity {
 public:
     Player(int x, int y);
 
-    void move(int dx, int dy, std::vector<Entity*>& entities, std::vector<std::vector<char>>& map);
+    void move(int dx, int dy, std::vector<Entity*>& enemies, std::vector<std::vector<char>>& map);
 
-    void attack(Entity& other);
+    void attack(Entity& other) override;
+
+    bool checkCollisionWithEnemies(int dx, int dy, std::vector<Entity*>& enemies);
+
+    Entity& collisionWithEnemy(int dx, int dy, std::vector<Entity*>& enemies);
 };
 
 class Enemy : public Entity {
 public:
     Enemy(int x, int y);
-    // Attacks the player if they are adjacent
-    // void attack(Entity& other) {
-    //     if (abs(getX() - other.getX()) <= 1 && abs(getY() - other.getY()) <= 1) {
-    //         other.setHealth(other.getHealth() - this->damage);
-    //     }
-    // }
+
+    void attack(Entity& other) override;
 };
+
+void fighting(Player& player, Entity& enemy, char player_symbol, char enemy_symbol, int stage);

@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-
 #include "entities.hpp"
-
 
 
 Entity::Entity(int x, int y, char symbol, int health, int damage) : x{x}, y{y} {
@@ -51,7 +46,7 @@ void Entity::setHealth(int health) {
 int Entity::getDamage() const {
     return damage;
 }
-void Entity::setDamage(int health) {
+void Entity::setDamage(int damage) {
     this->damage = damage;
 }
 
@@ -61,45 +56,84 @@ void Entity::move(int dx, int dy) {
     y += dy;
 }
 
-// Attack another entity if they are adjacent
-void Entity::attack(Entity& other) {
-    if (abs(getX() - other.getX()) <= 1 && abs(getY() - other.getY()) <= 1) {
-        other.setHealth(other.getHealth() - getDamage());
-    }
+void Entity::attack(Entity &other) {
+    other.setHealth(other.getHealth() - getDamage());
 }
 
 
 
-Player::Player(int x, int y) : Entity(x, y, '@', 100, 50) {}
+// Player class, inherits from Entity
+Player::Player(int x, int y) : Entity(x, y, playerSymbol, 100, 50) {}
 
 // Moves the player, checking for collision with walls and enemies
-void Player::move(int dx, int dy, std::vector<Entity*>& entities, std::vector<std::vector<char>>& map) {
+void Player::move(int dx, int dy, std::vector<Entity*>& enemies, std::vector<std::vector<char>>& map) {
     if (map[getX() + dx][getY() + dy] == '#') return;
-
-
-    // Check for collision with enemies
-    for (auto entity : entities) {
-        if (entity->getX() == getX() + dx && entity->getY() == getY() + dy) {
-            attack(*entity);
-            // entity->attack(*this);
-            return;
-        }
-    }
 
     // Move the player if no collision
     Entity::move(dx, dy);
 }
 
-// Attacks an enemy if they are adjacent
 void Player::attack(Entity& other) {
-    if (abs(getX() - other.getX()) <= 1 && abs(getY() - other.getY()) <= 1) {
-        other.setHealth(other.getHealth() - getDamage());
-        if (other.getHealth() <= 0) {
-            other.setSymbol('X');
+    other.setHealth(other.getHealth() - getDamage());
+    if (other.getHealth() <= 0) {
+        other.setSymbol('X');
+    }
+}
+
+bool Player::checkCollisionWithEnemies(int dx, int dy, std::vector<Entity*>& enemies) {
+    for (auto enemy : enemies) {
+        if (enemy->getX() == getX() + dx && enemy->getY() == getY() + dy && enemy->getHealth() > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Entity& Player::collisionWithEnemy(int dx, int dy, std::vector<Entity*> &enemies) {
+    for (auto enemy: enemies) {
+        if (enemy->getX() == getX() + dx && enemy->getY() == getY() + dy) {
+            return *enemy;
         }
     }
 }
 
-
 // Enemy class, inherits from Entity
-Enemy::Enemy(int x, int y) : Entity(x, y, 'E', 40, 10) {}
+Enemy::Enemy(int x, int y) : Entity(x, y, enemySymbol, 60, 30) {}
+
+void Enemy::attack(Entity &other) {
+    other.setHealth(other.getHealth() - getDamage());
+    if (other.getHealth() <= 0) {
+        //GAME OVER
+    }
+}
+
+void fighting(Player& player, Entity& enemy, char player_symbol, char enemy_symbol, int stage) {
+    switch (stage) {
+        case 0:
+            // player attack
+            player.setSymbol(' ');
+            player.attack(enemy);
+            enemy.setSymbol(player_symbol);
+            break;
+        case 1:
+            // player return
+            if (enemy.getHealth() == 0) {
+                enemy.setSymbol(deathSymbol);
+            } else {
+                enemy.setSymbol(enemy_symbol);
+            }
+            player.setSymbol(player_symbol);
+            break;
+        case 2:
+            // enemy attack
+            enemy.setSymbol(' ');
+            enemy.attack(player);
+            player.setSymbol(enemy_symbol);
+            break;
+        case 3:
+            // enemy return
+            player.setSymbol(player_symbol);
+            enemy.setSymbol(enemy_symbol);
+            break;
+    }
+}
