@@ -10,7 +10,7 @@ int random_section(int upper, int lower)
 	return lower + mt()%(upper - lower + 1);
 }
 
-void Room::drow_map()
+void Room::draw_map()
 {
     for (int i = 0; i < size; i++) {
         map[0][i] = '#';
@@ -37,7 +37,7 @@ Room::Room(bool left, bool up, bool right, bool down)
     set_right(right);
     set_down(down);
 
-    drow_map();
+    draw_map();
 }
 
 
@@ -74,47 +74,25 @@ std::array<bool, 4>& Room::get_doors()
 void Room::set_left(bool tmp)
 {
     doors[0] = tmp;
-    drow_map();
+    draw_map();
 }
 
 void Room::set_up(bool tmp)
 {
     doors[1] = tmp;
-    drow_map();
+    draw_map();
 }
 
 void Room::set_right(bool tmp)
 {
     doors[2] = tmp;
-    drow_map();
+    draw_map();
 }
 
 void Room::set_down(bool tmp)
 {
     doors[3] = tmp;
-    drow_map();
-}
-
-// Generate a random map with walls
-std::vector<std::vector<char>> generateMap() {
-    std::vector<std::vector<char>> map(MAP_SIZE, std::vector<char>(MAP_SIZE, ' '));
-
-    // Add walls
-    for (int i = 0; i < MAP_SIZE; i++) {
-        map[0][i] = '#';
-        map[i][0] = '#';
-        map[MAP_SIZE - 1][i] = '#';
-        map[i][MAP_SIZE - 1] = '#';
-    }
-
-    // // Add chests with random loot
-    // for (int i = 0; i < 5; i++) {
-    //     int x = random(1, MAP_SIZE - 2);
-    //     int y = random(1, MAP_SIZE - 2);
-    //     map[x][y] = 'C';
-    // }
-
-    return map;
+    draw_map();
 }
 
 
@@ -130,7 +108,22 @@ void Map::setLen(int len)
     {
         len = len;
         size = len * 2 - 1;
+        roomX = roomY = size / 2;
         Map::setNullMap();   
+    }
+}
+
+void Map::setRoomX(int x)
+{
+    if (x >= 0 && x < size) {
+        roomX = x;
+    }
+}
+
+void Map::setRoomY(int y)
+{
+    if (y >= 0 && y < size) {
+        roomY = y;
     }
 }
 
@@ -138,6 +131,21 @@ void Map::setLen(int len)
 int Map::getSize()
 {
     return size;
+}
+
+int Map::getLen()
+{
+    return len;
+}
+
+int Map::getRoomX()
+{
+    return roomX;
+}
+
+int Map::getRoomY()
+{
+    return roomY;
 }
 
 
@@ -205,8 +213,8 @@ int change_randrom_door(Room& room)
 Map::Map(int len)
 {
     setLen(len);
-    int x = len/2;
-    int y = len/2;
+    int x = size / 2;
+    int y = size / 2;
     Room room(false);
     int next_pos;
     

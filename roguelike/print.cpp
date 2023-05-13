@@ -11,21 +11,22 @@ COORD makeCoord(int x, int y) {
     return coord;
 }
 
-void drawGame(std::vector<std::vector<char>>& map,
-              std::vector<std::vector<char>>& map_clear,
+void drawGame(Map& map,
+              Map& map_clear,
               Player& player,
               std::vector<Entity*>& entities) {
-    map = map_clear;
+
+    std::vector<std::vector<char>> roomMap = map_clear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
     for (auto entity: entities) {
-        map[entity->getX()][entity->getY()] = entity->getSymbol();
+        roomMap[entity->getX()][entity->getY()] = entity->getSymbol();
     }
-    map[player.getX()][player.getY()] = player.getSymbol();
+    roomMap[player.getX()][player.getY()] = player.getSymbol();
 
     // Set console cursor at top left corner
     SetConsoleCursorPosition(hStdOut, topLeftCorner);
 
-    for (auto row: map) {
+    for (auto row: roomMap) {
         for (auto c: row) {
             if (c == player.getSymbol()) {
                 SetConsoleTextAttribute(hStdOut, 12);

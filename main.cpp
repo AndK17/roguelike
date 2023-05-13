@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-#include "roguelike/map.hpp"
 #include "roguelike/control.hpp"
 
 
@@ -21,15 +20,15 @@ int main() {
     Player player(10, 10);
     std::vector<Entity*> entities;
     for (int i = 0; i < 10; i++) {
-        entities.push_back(new Enemy(random(1, MAP_SIZE - 2), random(1, MAP_SIZE - 2)));
+        entities.push_back(new Enemy(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
     }
-
-    // Generate map
-    std::vector<std::vector<char>> map{generateMap()};
 
     system("cls");
 
-    std::vector<std::vector<char>> map_clear{map};
+    // Generate map
+    Map map(3);
+    Map map_clear(map);
+
 
     drawGame(map, map_clear, player, entities);
 
@@ -47,7 +46,7 @@ int main() {
     }
 
     // Game over
-    std::cout << std::endl << "Game over!" << std::endl;
+    std::cout << std::endl << "Бро, надо тренироваться!" << std::endl;
 
     // Clean up
     for (auto entity : entities) {
