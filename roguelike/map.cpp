@@ -85,7 +85,7 @@ void Room::generate_obstacles()
     int obstacles_count = random_section(6, 2);
     for(int i = 0; i < obstacles_count; i++)
     {
-        switch (random_section(5, 5))
+        switch (random_section(5))
         {
         case 0:
             map[random_section(size-3, 2)][random_section(size-3, 2)] = borderSymbol;
