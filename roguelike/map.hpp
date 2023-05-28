@@ -23,6 +23,7 @@ public:
     void set_up(bool tmp);
     void set_right(bool tmp);
     void set_down(bool tmp);
+    void generate_obstacles();
 
 protected:
     int size = ROOM_SIZE;

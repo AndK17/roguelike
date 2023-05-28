@@ -33,6 +33,7 @@ Room::Room(bool left, bool up, bool right, bool down) {
     set_down(down);
 
     draw_map();
+    generate_obstacles();
 }
 
 std::vector<std::vector<char>> Room::getMap() {
@@ -77,6 +78,84 @@ void Room::set_right(bool tmp) {
 void Room::set_down(bool tmp) {
     doors[3] = tmp;
     draw_map();
+}
+
+void Room::generate_obstacles()
+{
+    int obstacles_count = random_section(6, 2);
+    for(int i = 0; i < obstacles_count; i++)
+    {
+        switch (random_section(5, 5))
+        {
+        case 0:
+            map[random_section(size-3, 2)][random_section(size-3, 2)] = borderSymbol;
+            break;
+        case 1:
+            {
+            int pos = random_section(size-5, 2);
+            int y = random_section(size-3, 2);
+            for(int j = 0; j < 3; j++)
+            {
+                map[y][pos + j] = borderSymbol;
+            }
+            }
+            break;
+        case 2:
+            {
+            int pos = random_section(size-5, 2);
+            int x = random_section(size-3, 2);
+            for(int j = 0; j < 3; j++)
+            {
+                map[pos + j][x] = borderSymbol;
+            }
+            }
+            break;
+        case 3:
+            {
+            int pos = random_section(size-5, 2);
+            int x = random_section(size-5, 2);
+            for(int j = 0; j < 3; j++)
+            {
+                map[pos + j][x] = borderSymbol;
+            }
+            pos = pos + 2;
+            for(int j = 0; j < 3; j++)
+            {
+                map[pos][x + j] = borderSymbol;
+            }
+            }
+            break;
+        case 4:
+            {
+            int pos = random_section(size-5, 2);
+            int x = random_section(size-5, 2);
+            for(int j = 0; j < 3; j++)
+            {
+                map[x][pos + j] = borderSymbol;
+            }
+            pos = pos + 2;
+            for(int j = 0; j < 3; j++)
+            {
+                map[x + j][pos] = borderSymbol;
+            }
+            }
+            break;
+        case 5:
+            {
+            int pos = random_section(size-5, 2);
+            int x = random_section(size-5, 2);
+            for(int j = 0; j < 3; j++)
+            {
+                map[x][pos + j] = borderSymbol;
+            }
+            for(int j = 0; j < 3; j++)
+            {
+                map[x + j][pos] = borderSymbol;
+            }
+            }
+            break;
+        }
+    }
 }
 
 void Map::setNullMap() {
@@ -173,6 +252,7 @@ int change_randrom_door(Room &room) {
         } else
             n -= 1;
     }
+    return 0;
 }
 
 Map::Map(int len) {
