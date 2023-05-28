@@ -1,19 +1,22 @@
 #include "control.hpp"
 
-void playGame(Map& map,
-              Map& map_clear,
-              Player& player,
-              std::vector<Entity*>& entities,
+void playGame(Map &map,
+              Map &map_clear,
+              Player &player,
+              std::vector<Entity *> &entities,
               char input) {
     // Move the player
     int dx{0}, dy{0};
-    if (input == 'w') dx = -1;
-    else if (input == 'a') dy = -1;
-    else if (input == 's') dx = 1;
-    else if (input == 'd') dy = 1;
+    if (input == 'w')
+        dx = -1;
+    else if (input == 'a')
+        dy = -1;
+    else if (input == 's')
+        dx = 1;
+    else if (input == 'd')
+        dy = 1;
 
     std::vector<std::vector<char>> roomMap = map.getMap()[map.getRoomX()][map.getRoomY()].getMap();
-
 
     if (player.getY() + dy == -1) {
         map.setRoomY(map.getRoomY() - 1);
@@ -45,7 +48,7 @@ void playGame(Map& map,
             if (i == 2 && enemy.getHealth() <= 0) {
                 break;
             }
-            
+
             fighting(player, enemy, i);
             drawGame(map, map_clear, player, entities);
             showStatistics(player, entities);
