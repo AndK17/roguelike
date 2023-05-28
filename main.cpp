@@ -20,7 +20,22 @@ int main() {
     Player player(10, 10);
     std::vector<Entity*> entities;
     for (int i = 0; i < 10; i++) {
-        entities.push_back(new Enemy(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+        int typeEnemy = random(1, 3);
+        switch (typeEnemy)
+        {
+        case 1:
+            entities.push_back(new Goblin(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+            break;
+
+        case 2:
+            entities.push_back(new Slime(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+            break;
+        
+        case 3:
+            entities.push_back(new Wolf(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+            break;
+        }
+        
     }
 
     system("cls");
@@ -31,6 +46,7 @@ int main() {
 
 
     drawGame(map, map_clear, player, entities);
+    drawStatistics(player);
 
     // Game loop
     while (player.getHealth() > 0) {
@@ -45,8 +61,9 @@ int main() {
         }
     }
 
-    // Game over
-    std::cout << std::endl << "Бро, надо тренироваться!" << std::endl;
+    player.setSymbol(deathPlayerSymbol);
+    playGame(map, map_clear, player, entities, '1');
+    std::cout << std::endl << "Game over!" << std::endl;
 
     // Clean up
     for (auto entity : entities) {

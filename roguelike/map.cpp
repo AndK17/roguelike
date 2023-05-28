@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include "map.hpp"
 
 
@@ -13,10 +12,10 @@ int random_section(int upper, int lower)
 void Room::draw_map()
 {
     for (int i = 0; i < size; i++) {
-        map[0][i] = '#';
-        map[i][0] = '#';
-        map[size - 1][i] = '#';
-        map[i][size - 1] = '#';
+        map[0][i] = borderSymbol;
+        map[i][0] = borderSymbol;
+        map[size - 1][i] = borderSymbol;
+        map[i][size - 1] = borderSymbol;
     }
     
     if (get_left())

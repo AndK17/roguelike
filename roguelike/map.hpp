@@ -3,6 +3,7 @@
 #include <array>
 
 const int ROOM_SIZE = 20;
+static char borderSymbol = '#';
 
 int random_section(int upper, int lower = 0);
 

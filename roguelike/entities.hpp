@@ -1,13 +1,40 @@
 #include <vector>
 #include <string>
+#include <map>
 
 static char playerSymbol = '@';
-static char enemySymbol = 'E';
 static char deathSymbol = 'X';
+static char deathPlayerSymbol = '!';
+
+
+static std::map <std::string, char> enemySymbol {
+    { "goblin", 'G' },
+    { "slime", 'S' },
+    { "wolf", 'W' }
+};
+
+
+#define color_black      0
+#define color_dark_blue  1
+#define color_dark_green 2
+#define color_light_blue 3
+#define color_dark_red   4
+#define color_magenta    5
+#define color_orange     6
+#define color_light_gray 7
+#define color_gray       8
+#define color_blue       9
+#define color_green     10
+#define color_cyan      11
+#define color_red       12
+#define color_pink      13
+#define color_yellow    14
+#define color_white     15
 
 class Entity {
 public:
-    Entity(int x, int y, char symbol, int health, int damage);
+
+    Entity(int x, int y, char symbol, int health, int damage, int color, std::string name);
 
     virtual ~Entity();
 
@@ -26,6 +53,12 @@ public:
     int getDamage() const;
     void setDamage(int damage);
 
+    int getColor() const;
+    void setColor(int color);
+
+    std::string getName() const;
+    void setName(std::string name);
+
     virtual void move(int dx, int dy);
 
     virtual void attack(Entity& other);
@@ -33,7 +66,8 @@ public:
 protected:
     int x, y;
     char symbol;
-	int health, damage;
+	int health, damage, color;
+    std::string name;
 };
 
 class Player : public Entity {
@@ -47,13 +81,30 @@ public:
     bool checkCollisionWithEnemies(int dx, int dy, std::vector<Entity*>& enemies);
 
     Entity& collisionWithEnemy(int dx, int dy, std::vector<Entity*>& enemies);
+
+    bool checkNeighbourWithEnemy(std::vector<Entity*>& enemies);
+
+    Entity& neighbourWithEnemy(std::vector<Entity*>& enemies);
 };
 
 class Enemy : public Entity {
 public:
-    Enemy(int x, int y);
-
-    void attack(Entity& other) override;
+    Enemy(int x, int y, char symbol, int health, int damage, int color, std::string name);
 };
 
-void fighting(Player& player, Entity& enemy, char player_symbol, char enemy_symbol, int stage);
+class Goblin : public Enemy {
+public:
+    Goblin(int x, int y);
+};
+
+class Slime : public Enemy {
+public:
+    Slime(int x, int y);
+};
+
+class Wolf: public Enemy {
+public:
+    Wolf(int x, int y);
+};
+
+void fighting(Player& player, Entity& enemy, int stage);

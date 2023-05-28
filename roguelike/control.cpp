@@ -19,29 +19,36 @@ void playGame(Map& map,
         map.setRoomY(map.getRoomY() - 1);
         player.setY(ROOM_SIZE - 1);
         drawGame(map, map_clear, player, entities);
+        showStatistics(player, entities);
     } else if (player.getX() + dx == -1) {
         map.setRoomX(map.getRoomX() - 1);
         player.setX(ROOM_SIZE - 1);
         drawGame(map, map_clear, player, entities);
+        showStatistics(player, entities);
     } else if (player.getY() + dy == ROOM_SIZE) {
         map.setRoomY(map.getRoomY() + 1);
         player.setY(0);
         drawGame(map, map_clear, player, entities);
+        showStatistics(player, entities);
     } else if (player.getX() + dx == ROOM_SIZE) {
         map.setRoomX(map.getRoomX() + 1);
         player.setX(0);
         drawGame(map, map_clear, player, entities);
+        showStatistics(player, entities);
     } else if (!player.checkCollisionWithEnemies(dx, dy, entities)) {
         player.move(dx, dy, entities, roomMap);
         drawGame(map, map_clear, player, entities);
+        showStatistics(player, entities);
     } else {
         Entity &enemy{player.collisionWithEnemy(dx, dy, entities)};
         for (int i = 0; i < 4; ++i) {
             if (i == 2 && enemy.getHealth() <= 0) {
                 break;
             }
-            fighting(player, enemy, playerSymbol, enemySymbol, i);
+            
+            fighting(player, enemy, i);
             drawGame(map, map_clear, player, entities);
+            showStatistics(player, entities);
             if (i < 3) {
                 Sleep(500);
             }
