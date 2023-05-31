@@ -18,17 +18,23 @@ public:
     bool get_up();
     bool get_right();
     bool get_down();
+    bool get_is_finish();
+    int get_room_num();
     std::array<bool, 4> &get_doors();
     std::vector<Entity> &get_entiteis();
     void set_left(bool tmp);
     void set_up(bool tmp);
     void set_right(bool tmp);
     void set_down(bool tmp);
+    void set_is_finish(bool tmp);
+    void set_room_num(int tmp);
     void generate_obstacles();
     void generate_enemies();
 
 protected:
     int size = glb::roomSize;
+    int room_num = 0;
+    bool is_finish = false;
     // порядок: left, up, right, down
     std::array<bool, 4> doors;
     std::vector<std::vector<char>> map;

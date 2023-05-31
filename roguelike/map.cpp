@@ -58,6 +58,14 @@ bool Room::get_down() {
     return doors[3];
 }
 
+bool Room::get_is_finish() {
+    return is_finish;
+}
+
+int Room::get_room_num() {
+    return room_num;
+}
+
 std::array<bool, 4> &Room::get_doors() {
     return doors;
 }
@@ -85,6 +93,14 @@ void Room::set_right(bool tmp) {
 void Room::set_down(bool tmp) {
     doors[3] = tmp;
     draw_map();
+}
+
+void Room::set_is_finish(bool tmp) {
+    is_finish = tmp;
+}
+
+void Room::set_room_num(int tmp) {
+    room_num = tmp;
 }
 
 void Room::generate_obstacles()
@@ -312,9 +328,14 @@ Map::Map(int len) {
     int next_pos;
 
     for (int i{0}; i < len; i++) {
+        room.set_room_num(i+1);
+        if (i == len - 1) 
+            room.set_is_finish(true);
         if (i != len - 1)
             next_pos = change_randrom_door(room);
+
         map[x][y] = room;
+        
         switch (next_pos) {
         case 0:
             y -= 1;
