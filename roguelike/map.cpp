@@ -2,6 +2,7 @@
 
 #include "map.hpp"
 
+
 int random_section(int upper, int lower) {
     std::mt19937 mt{std::random_device{}()};
     return lower + mt() % (upper - lower + 1);
@@ -34,9 +35,10 @@ Room::Room(bool left, bool up, bool right, bool down) {
 
     draw_map();
     generate_obstacles();
+    generate_enemies();
 }
 
-std::vector<std::vector<char>> Room::getMap() {
+std::vector<std::vector<char>> &Room::getMap() {
     return map;
 }
 
@@ -58,6 +60,11 @@ bool Room::get_down() {
 
 std::array<bool, 4> &Room::get_doors() {
     return doors;
+}
+
+std::vector<Entity> & Room::get_entiteis()
+{
+    return entities;
 }
 
 void Room::set_left(bool tmp) {
@@ -158,6 +165,48 @@ void Room::generate_obstacles()
     }
 }
 
+bool check_enemy_pos(int x, int y, std::vector<Entity> &entities)
+{
+    for(auto entity: entities)
+    {
+        if (x == entity.getX() && y == entity.getY()) 
+        return true;
+    }
+    return false;
+}
+
+void Room::generate_enemies()
+{
+    int enemies_count = random_section(10, 7);
+    for (int i = 0; i < enemies_count; i++) {
+        int typeEnemy = random_section(3, 1);
+        int x = random_section(ROOM_SIZE - 2, 1);
+        int y = random_section(ROOM_SIZE - 2, 1);
+        while (map[x][y] != emptySymbol || (x != size/2 && y != size/2) || check_enemy_pos(x, y, entities));
+        {
+            x = random_section(ROOM_SIZE - 2, 1);
+            y = random_section(ROOM_SIZE - 2, 1);
+        }
+        
+        switch (typeEnemy) {
+        case 1:
+            entities.push_back(
+                Goblin(x, y));
+            break;
+
+        case 2:
+            entities.push_back(
+                Slime(x, y));
+            break;
+
+        case 3:
+            entities.push_back(
+                Wolf(x, y));
+            break;
+        }
+    }
+}
+
 void Map::setNullMap() {
     map = std::vector<std::vector<Room>>(size, std::vector<Room>(size, NULL));
 }
@@ -199,7 +248,7 @@ int Map::getRoomY() {
     return roomY;
 }
 
-std::vector<std::vector<Room>> Map::getMap() {
+std::vector<std::vector<Room>> &Map::getMap() {
     return map;
 }
 

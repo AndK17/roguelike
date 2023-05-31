@@ -10,14 +10,13 @@ COORD makeCoord(int x, int y) {
     return coord;
 }
 
-void drawGame(Map &map, Map &map_clear, Player &player,
-              std::vector<Entity *> &entities) {
-
+void drawGame(Map &map, Map &map_clear, Player &player) {
+    std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entiteis();
     std::vector<std::vector<char>> roomMap =
         map_clear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
-    for (auto entity : entities) {
-        roomMap[entity->getX()][entity->getY()] = entity->getSymbol();
+    for (auto entity : roomEntities) {
+        roomMap[entity.getX()][entity.getY()] = entity.getSymbol();
     }
     roomMap[player.getX()][player.getY()] = player.getSymbol();
 

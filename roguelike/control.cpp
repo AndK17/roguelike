@@ -3,7 +3,6 @@
 void playGame(Map &map,
               Map &map_clear,
               Player &player,
-              std::vector<Entity *> &entities,
               char input) {
     // Move the player
     int dx{0}, dy{0};

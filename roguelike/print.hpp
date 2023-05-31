@@ -1,11 +1,9 @@
-#include "entities.hpp"
 #include "map.hpp"
 #include <Windows.h>
 
 static HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void drawGame(Map &map, Map &map_clear, Player &player,
-              std::vector<Entity *> &entities);
+void drawGame(Map &map, Map &map_clear, Player &player);
 
 void drawStatistics(Player &player);
 

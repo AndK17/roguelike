@@ -14,26 +14,26 @@ int main() {
 
     // Initialize player and enemies
     Player player(10, 10);
-    std::vector<Entity *> entities;
-    for (int i = 0; i < 10; i++) {
-        int typeEnemy = random(1, 3);
-        switch (typeEnemy) {
-        case 1:
-            entities.push_back(
-                new Goblin(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-            break;
+    // std::vector<Entity *> entities;
+    // for (int i = 0; i < 10; i++) {
+    //     int typeEnemy = random(1, 3);
+    //     switch (typeEnemy) {
+    //     case 1:
+    //         entities.push_back(
+    //             new Goblin(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+    //         break;
 
-        case 2:
-            entities.push_back(
-                new Slime(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-            break;
+    //     case 2:
+    //         entities.push_back(
+    //             new Slime(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+    //         break;
 
-        case 3:
-            entities.push_back(
-                new Wolf(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-            break;
-        }
-    }
+    //     case 3:
+    //         entities.push_back(
+    //             new Wolf(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
+    //         break;
+    //     }
+    // }
 
     system("cls");
 
@@ -41,7 +41,7 @@ int main() {
     Map map(3);
     Map map_clear(map);
 
-    drawGame(map, map_clear, player, entities);
+    drawGame(map, map_clear, player);
     drawStatistics(player);
 
     // Game loop
@@ -49,7 +49,7 @@ int main() {
         char input;
         input = _getwch();
         if (input == 'w' || input == 'a' || input == 's' || input == 'd') {
-            playGame(map, map_clear, player, entities, input);
+            playGame(map, map_clear, player, input);
         } else if (input == 27) {
             std::cout << std::endl
                       << "Goodbye!" << std::endl;
@@ -58,7 +58,7 @@ int main() {
     }
 
     player.setSymbol(deathPlayerSymbol);
-    playGame(map, map_clear, player, entities, '1');
+    playGame(map, map_clear, player, '1');
     std::cout << std::endl
               << "Game over!" << std::endl;
 
