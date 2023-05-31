@@ -18,7 +18,7 @@ int main() {
     Map map(3);
     Map map_clear(map);
 
-    playGame(map, map_clear, player, '1');
+    drawGame(map, map_clear, player);
     drawStatistics(player);
 
     // Game loop

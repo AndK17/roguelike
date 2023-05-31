@@ -6,6 +6,7 @@ constexpr char playerSymbol = '@';
 constexpr char deathSymbol = 'X';
 constexpr char deathPlayerSymbol = '!';
 
+
 inline std::map<std::string, char> enemySymbol{
     {"goblin", 'G'}, {"slime", 'S'}, {"wolf", 'W'}};
 

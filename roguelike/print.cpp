@@ -4,10 +4,17 @@
 
 static COORD topLeftCorner = makeCoord(0, 0);
 
+static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
+
 // Make COORD
 COORD makeCoord(int x, int y) {
     COORD coord = {(SHORT)x, (SHORT)y};
     return coord;
+}
+
+COORD getInfoCOORD(int y) {
+    COORD infoCOORD = makeCoord(glb::roomSize * 2 + 1, y);
+    return infoCOORD;
 }
 
 void drawGame(Map &map, Map &map_clear, Player &player) {
@@ -52,35 +59,46 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
 void drawStatistics(Player &player) {
     SetConsoleTextAttribute(hStdOut, color_white);
+    SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
+
     std::cout << glb::playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
-              << ", Damage:  " << player.getDamage() << std::endl;
+              << ", Damage: " << player.getDamage() << std::endl;
+
+    SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
-void drawStatistics(Player &player, Entity &enemy) {
+void drawStatistics(Player &player, std::vector<Entity> &entities) {
     SetConsoleTextAttribute(hStdOut, color_white);
+    SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
+
     std::cout << glb::playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
-              << ", Damage:  " << player.getDamage() << std::endl;
-    if (enemy.getSymbol() != glb::deathSymbol) {
-        std::cout << glb::enemySymbol[enemy.getName()] << " (" << enemy.getName()
-                  << ") - HP: " << enemy.getHealth()
-                  << ", Damage:  " << enemy.getDamage() << std::endl;
-    }
+              << ", Damage: " << player.getDamage() << std::endl;
+    for (int i = 0; i < entities.size(); ++i)
+        if (entities[i].getSymbol() != glb::deathSymbol) {
+            SetConsoleCursorPosition(hStdOut, getInfoCOORD(i + 1));
+
+            std::cout << glb::enemySymbol[entities[i].getName()] << " (" << entities[i].getName()
+                      << ") - HP: " << entities[i].getHealth()
+                      << ", Damage: " << entities[i].getDamage() << std::endl;
+        }
+
+    SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
 void clearConsole() {
     SetConsoleCursorPosition(hStdOut, topLeftCorner);
     for (int i = 0; i < 25; ++i) {
-        std::cout << "                                                     "
+        std::cout << "                                                                                               "
                   << std::endl;
     }
 }
 
 void showStatistics(Player &player, std::vector<Entity> &entities) {
-    auto enemy = player.neighbourWithEnemy(entities);
-    if (enemy) {
-        drawStatistics(player, *enemy);
+    std::vector<Entity> neighbourEnenmies = player.neighbourWithEnemy(entities);
+    if (!neighbourEnenmies.empty()) {
+        drawStatistics(player, neighbourEnenmies);
     } else {
         drawStatistics(player);
     }

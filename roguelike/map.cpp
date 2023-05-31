@@ -182,7 +182,7 @@ void Room::generate_enemies()
         int typeEnemy = random(3, 1);
         int x = random(glb::roomSize - 2, 1);
         int y = random(glb::roomSize - 2, 1);
-        while (map[x][y] != glb::emptySymbol || (x != size/2 && y != size/2) || check_enemy_pos(x, y, entities))
+        while (map[x][y] != glb::emptySymbol || (x == size/2 && y == size/2) || check_enemy_pos(x, y, entities))
         {
             x = random(glb::roomSize - 2, 1);
             y = random(glb::roomSize - 2, 1);

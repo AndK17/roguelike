@@ -7,7 +7,7 @@ void drawGame(Map &map, Map &map_clear, Player &player);
 
 void drawStatistics(Player &player);
 
-void drawStatistics(Player &player, Entity &enemy);
+void drawStatistics(Player &player, std::vector<Entity> &entities);
 
 void clearConsole();
 

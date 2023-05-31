@@ -88,17 +88,18 @@ Entity *Player::collisionWithEnemy(int dx, int dy,
 }
 
 
-Entity *Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
+std::vector<Entity> Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
+    std::vector<Entity> neighbourEnenmies {};
     for (auto &enemy : enemies) {
         if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
              (enemy.getX() == getX() && enemy.getY() == getY() - 1)) &&
             (enemy.getHealth() > 0)) {
-            return &enemy;
+            neighbourEnenmies.push_back(enemy);
         }
     }
-    return nullptr;
+    return neighbourEnenmies;
 }
 
 Enemy::Enemy(int x, int y, char symbol, int health, int damage, int color,

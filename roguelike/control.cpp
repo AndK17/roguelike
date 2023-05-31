@@ -20,7 +20,11 @@ void playGame(Map &map,
     std::vector<std::vector<char>> &roomMap = map.getMap()[map.getRoomX()][map.getRoomY()].getMap();
     std::vector<Entity> &entities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entiteis();
 
-    if (player.getY() + dy == -1) {
+    if (input == '1') {
+        drawGame(map, map_clear, player);
+        showStatistics(player, entities);
+        return;
+    } else if (player.getY() + dy == -1) {
         map.setRoomY(map.getRoomY() - 1);
         player.setY(glb::roomSize - 1);
         drawGame(map, map_clear, player);
@@ -42,7 +46,7 @@ void playGame(Map &map,
         showStatistics(player, entities);
     } else {
         auto enemy = player.collisionWithEnemy(dx, dy, entities);
-        if (!enemy) {
+        if (!enemy || enemy->getSymbol() == glb::deathSymbol) {
             player.move(dx, dy, roomMap);
             drawGame(map, map_clear, player);
             showStatistics(player, entities);
