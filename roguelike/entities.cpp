@@ -58,11 +58,11 @@ void Entity::attack(Entity &other) {
 
 // Player class, inherits from Entity
 Player::Player(int x, int y)
-    : Entity(x, y, playerSymbol, 100, 30, color_red, "player") {}
+    : Entity(x, y, glb::playerSymbol, 100, 30, color_red, "player") {}
 
 // Moves the player, checking for collision with walls and enemies
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
-    if (map[getX() + dx][getY() + dy] == '#')
+    if (map[getX() + dx][getY() + dy] == glb::borderSymbol)
         return;
 
     // Move the player if no collision
@@ -76,49 +76,29 @@ void Player::attack(Entity &other) {
     }
 }
 
-bool Player::checkCollisionWithEnemies(int dx, int dy,
-                                       std::vector<Entity> &enemies) {
-    for (auto enemy : enemies) {
-        if (enemy.getX() == getX() + dx && enemy.getY() == getY() + dy &&
-            enemy.getHealth() > 0) {
-            return true;
-        }
-    }
-    return false;
-}
 
-Entity &Player::collisionWithEnemy(int dx, int dy,
+Entity *Player::collisionWithEnemy(int dx, int dy,
                                    std::vector<Entity> &enemies) {
-    for (auto enemy : enemies) {
+    for (auto &enemy : enemies) {
         if (enemy.getX() == getX() + dx && enemy.getY() == getY() + dy) {
-            return enemy;
+            return &enemy;
         }
     }
+    return nullptr;
 }
 
-bool Player::checkNeighbourWithEnemy(std::vector<Entity> &enemies) {
-    for (auto enemy : enemies) {
+
+Entity *Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
+    for (auto &enemy : enemies) {
         if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
              (enemy.getX() == getX() && enemy.getY() == getY() - 1)) &&
             (enemy.getHealth() > 0)) {
-            return true;
+            return &enemy;
         }
     }
-    return false;
-}
-
-Entity &Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
-    for (auto enemy : enemies) {
-        if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
-             (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
-             (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
-             (enemy.getX() == getX() && enemy.getY() == getY() - 1)) &&
-            (enemy.getHealth() > 0)) {
-            return *enemy;
-        }
-    }
+    return nullptr;
 }
 
 Enemy::Enemy(int x, int y, char symbol, int health, int damage, int color,
@@ -126,17 +106,17 @@ Enemy::Enemy(int x, int y, char symbol, int health, int damage, int color,
     : Entity(x, y, symbol, health, damage, color, name) {}
 
 Goblin::Goblin(int x, int y)
-    : Enemy(x, y, enemySymbol["goblin"], 60, 20, color_dark_green, "goblin") {}
+    : Enemy(x, y, glb::enemySymbol["goblin"], 60, 20, color_dark_green, "goblin") {}
 
 Slime::Slime(int x, int y)
-    : Enemy(x, y, enemySymbol["slime"], 50, 30, color_blue, "slime") {}
+    : Enemy(x, y, glb::enemySymbol["slime"], 50, 30, color_blue, "slime") {}
 
 Wolf::Wolf(int x, int y)
-    : Enemy(x, y, enemySymbol["wolf"], 40, 40, color_light_gray, "wolf") {}
+    : Enemy(x, y, glb::enemySymbol["wolf"], 40, 40, color_light_gray, "wolf") {}
 
 void fighting(Player &player, Entity &enemy, int stage) {
-    char player_symbol = playerSymbol;
-    char enemy_symbol = enemySymbol[enemy.getName()];
+    char player_symbol = glb::playerSymbol;
+    char enemy_symbol = glb::enemySymbol[enemy.getName()];
     switch (stage) {
     case 0:
         // player attack
@@ -147,7 +127,7 @@ void fighting(Player &player, Entity &enemy, int stage) {
     case 1:
         // player return
         if (enemy.getHealth() == 0) {
-            enemy.setSymbol(deathSymbol);
+            enemy.setSymbol(glb::deathSymbol);
         } else {
             enemy.setSymbol(enemy_symbol);
         }

@@ -4,11 +4,8 @@
 
 #include "entities.hpp"
 
-const int ROOM_SIZE = 20;
-static char borderSymbol = '#';
-static char emptySymbol = ' ';
 
-int random_section(int upper, int lower = 0);
+int random(int upper, int lower = 0);
 
 std::vector<std::vector<char>> generateMap();
 
@@ -31,7 +28,7 @@ public:
     void generate_enemies();
 
 protected:
-    int size = ROOM_SIZE;
+    int size = glb::roomSize;
     // порядок: left, up, right, down
     std::array<bool, 4> doors;
     std::vector<std::vector<char>> map;

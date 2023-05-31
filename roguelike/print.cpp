@@ -15,7 +15,7 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
     std::vector<std::vector<char>> roomMap =
         map_clear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
-    for (auto entity : roomEntities) {
+    for (auto &entity : roomEntities) {
         roomMap[entity.getX()][entity.getY()] = entity.getSymbol();
     }
     roomMap[player.getX()][player.getY()] = player.getSymbol();
@@ -27,17 +27,17 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
     for (auto row : roomMap) {
         for (auto c : row) {
-            if (c == playerSymbol || c == deathPlayerSymbol) {
+            if (c == glb::playerSymbol || c == glb::deathPlayerSymbol) {
                 SetConsoleTextAttribute(hStdOut, Player{0, 0}.getColor());
-            } else if (c == enemySymbol["goblin"]) {
+            } else if (c == glb::enemySymbol["goblin"]) {
                 SetConsoleTextAttribute(hStdOut, Goblin{0, 0}.getColor());
-            } else if (c == enemySymbol["slime"]) {
+            } else if (c == glb::enemySymbol["slime"]) {
                 SetConsoleTextAttribute(hStdOut, Slime{0, 0}.getColor());
-            } else if (c == enemySymbol["wolf"]) {
+            } else if (c == glb::enemySymbol["wolf"]) {
                 SetConsoleTextAttribute(hStdOut, Wolf{0, 0}.getColor());
-            } else if (c == borderSymbol) {
+            } else if (c == glb::borderSymbol) {
                 SetConsoleTextAttribute(hStdOut, color_yellow);
-            } else if (c == deathSymbol) {
+            } else if (c == glb::deathSymbol) {
                 SetConsoleTextAttribute(hStdOut, color_gray);
             } else {
                 SetConsoleTextAttribute(hStdOut, color_white);
@@ -52,18 +52,18 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
 void drawStatistics(Player &player) {
     SetConsoleTextAttribute(hStdOut, color_white);
-    std::cout << playerSymbol << " (" << player.getName()
+    std::cout << glb::playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
               << ", Damage:  " << player.getDamage() << std::endl;
 }
 
 void drawStatistics(Player &player, Entity &enemy) {
     SetConsoleTextAttribute(hStdOut, color_white);
-    std::cout << playerSymbol << " (" << player.getName()
+    std::cout << glb::playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
               << ", Damage:  " << player.getDamage() << std::endl;
-    if (enemy.getSymbol() != deathSymbol) {
-        std::cout << enemySymbol[enemy.getName()] << " (" << enemy.getName()
+    if (enemy.getSymbol() != glb::deathSymbol) {
+        std::cout << glb::enemySymbol[enemy.getName()] << " (" << enemy.getName()
                   << ") - HP: " << enemy.getHealth()
                   << ", Damage:  " << enemy.getDamage() << std::endl;
     }
@@ -78,9 +78,9 @@ void clearConsole() {
 }
 
 void showStatistics(Player &player, std::vector<Entity> &entities) {
-    if (player.checkNeighbourWithEnemy(entities)) {
-        Entity &enemy{player.neighbourWithEnemy(entities)};
-        drawStatistics(player, enemy);
+    auto enemy = player.neighbourWithEnemy(entities);
+    if (enemy) {
+        drawStatistics(player, *enemy);
     } else {
         drawStatistics(player);
     }

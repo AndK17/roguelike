@@ -6,34 +6,12 @@
 
 #include "roguelike/control.hpp"
 
-// Generate a random number between min and max
-int random(int min, int max) { return rand() % (max - min + 1) + min; }
 
 int main() {
     srand(time(0));
 
     // Initialize player and enemies
-    Player player(10, 10);
-    // std::vector<Entity *> entities;
-    // for (int i = 0; i < 10; i++) {
-    //     int typeEnemy = random(1, 3);
-    //     switch (typeEnemy) {
-    //     case 1:
-    //         entities.push_back(
-    //             new Goblin(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-    //         break;
-
-    //     case 2:
-    //         entities.push_back(
-    //             new Slime(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-    //         break;
-
-    //     case 3:
-    //         entities.push_back(
-    //             new Wolf(random(1, ROOM_SIZE - 2), random(1, ROOM_SIZE - 2)));
-    //         break;
-    //     }
-    // }
+    Player player(glb::roomSize / 2, glb::roomSize / 2);
 
     system("cls");
 
@@ -41,7 +19,7 @@ int main() {
     Map map(3);
     Map map_clear(map);
 
-    drawGame(map, map_clear, player);
+    playGame(map, map_clear, player, '1');
     drawStatistics(player);
 
     // Game loop
@@ -57,14 +35,10 @@ int main() {
         }
     }
 
-    player.setSymbol(deathPlayerSymbol);
+    player.setSymbol(glb::deathPlayerSymbol);
     playGame(map, map_clear, player, '1');
     std::cout << std::endl
               << "Game over!" << std::endl;
 
-    // Clean up
-    for (auto entity : entities) {
-        delete entity;
-    }
     return 0;
 }
