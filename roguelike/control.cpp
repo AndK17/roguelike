@@ -1,4 +1,6 @@
 #include "control.hpp"
+#include <iostream>
+
 
 void playGame(Map &map,
               Map &map_clear,

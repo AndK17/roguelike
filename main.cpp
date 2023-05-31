@@ -14,7 +14,6 @@ int main() {
     Player player(glb::roomSize / 2, glb::roomSize / 2);
 
     system("cls");
-
     // Generate map
     Map map(3);
     Map map_clear(map);
