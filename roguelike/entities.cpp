@@ -61,8 +61,7 @@ Player::Player(int x, int y)
     : Entity(x, y, playerSymbol, 100, 30, color_red, "player") {}
 
 // Moves the player, checking for collision with walls and enemies
-void Player::move(int dx, int dy, std::vector<Entity *> &enemies,
-                  std::vector<std::vector<char>> &map) {
+void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
     if (map[getX() + dx][getY() + dy] == '#')
         return;
 
@@ -78,10 +77,10 @@ void Player::attack(Entity &other) {
 }
 
 bool Player::checkCollisionWithEnemies(int dx, int dy,
-                                       std::vector<Entity *> &enemies) {
+                                       std::vector<Entity> &enemies) {
     for (auto enemy : enemies) {
-        if (enemy->getX() == getX() + dx && enemy->getY() == getY() + dy &&
-            enemy->getHealth() > 0) {
+        if (enemy.getX() == getX() + dx && enemy.getY() == getY() + dy &&
+            enemy.getHealth() > 0) {
             return true;
         }
     }
@@ -89,34 +88,34 @@ bool Player::checkCollisionWithEnemies(int dx, int dy,
 }
 
 Entity &Player::collisionWithEnemy(int dx, int dy,
-                                   std::vector<Entity *> &enemies) {
+                                   std::vector<Entity> &enemies) {
     for (auto enemy : enemies) {
-        if (enemy->getX() == getX() + dx && enemy->getY() == getY() + dy) {
-            return *enemy;
+        if (enemy.getX() == getX() + dx && enemy.getY() == getY() + dy) {
+            return enemy;
         }
     }
 }
 
-bool Player::checkNeighbourWithEnemy(std::vector<Entity *> &enemies) {
+bool Player::checkNeighbourWithEnemy(std::vector<Entity> &enemies) {
     for (auto enemy : enemies) {
-        if (((enemy->getX() == getX() + 1 && enemy->getY() == getY()) ||
-             (enemy->getX() == getX() - 1 && enemy->getY() == getY()) ||
-             (enemy->getX() == getX() && enemy->getY() == getY() + 1) ||
-             (enemy->getX() == getX() && enemy->getY() == getY() - 1)) &&
-            (enemy->getHealth() > 0)) {
+        if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
+             (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
+             (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
+             (enemy.getX() == getX() && enemy.getY() == getY() - 1)) &&
+            (enemy.getHealth() > 0)) {
             return true;
         }
     }
     return false;
 }
 
-Entity &Player::neighbourWithEnemy(std::vector<Entity *> &enemies) {
+Entity &Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
     for (auto enemy : enemies) {
-        if (((enemy->getX() == getX() + 1 && enemy->getY() == getY()) ||
-             (enemy->getX() == getX() - 1 && enemy->getY() == getY()) ||
-             (enemy->getX() == getX() && enemy->getY() == getY() + 1) ||
-             (enemy->getX() == getX() && enemy->getY() == getY() - 1)) &&
-            (enemy->getHealth() > 0)) {
+        if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
+             (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
+             (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
+             (enemy.getX() == getX() && enemy.getY() == getY() - 1)) &&
+            (enemy.getHealth() > 0)) {
             return *enemy;
         }
     }

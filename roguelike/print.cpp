@@ -77,7 +77,7 @@ void clearConsole() {
     }
 }
 
-void showStatistics(Player &player, std::vector<Entity *> &entities) {
+void showStatistics(Player &player, std::vector<Entity> &entities) {
     if (player.checkNeighbourWithEnemy(entities)) {
         Entity &enemy{player.neighbourWithEnemy(entities)};
         drawStatistics(player, enemy);

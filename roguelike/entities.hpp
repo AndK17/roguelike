@@ -69,19 +69,18 @@ class Player : public Entity {
 public:
     Player(int x, int y);
 
-    void move(int dx, int dy, std::vector<Entity *> &enemies,
-              std::vector<std::vector<char>> &map);
+    void move(int dx, int dy, std::vector<std::vector<char>> &map);
 
     void attack(Entity &other) override;
 
     bool checkCollisionWithEnemies(int dx, int dy,
-                                   std::vector<Entity *> &enemies);
+                                   std::vector<Entity> &enemies);
 
-    Entity &collisionWithEnemy(int dx, int dy, std::vector<Entity *> &enemies);
+    Entity &collisionWithEnemy(int dx, int dy, std::vector<Entity> &enemies);
 
-    bool checkNeighbourWithEnemy(std::vector<Entity *> &enemies);
+    bool checkNeighbourWithEnemy(std::vector<Entity> &enemies);
 
-    Entity &neighbourWithEnemy(std::vector<Entity *> &enemies);
+    Entity &neighbourWithEnemy(std::vector<Entity> &enemies);
 };
 
 class Enemy : public Entity {

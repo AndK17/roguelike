@@ -16,30 +16,31 @@ void playGame(Map &map,
         dy = 1;
 
     std::vector<std::vector<char>> roomMap = map.getMap()[map.getRoomX()][map.getRoomY()].getMap();
+    std::vector<Entity> &entities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entiteis();
 
     if (player.getY() + dy == -1) {
         map.setRoomY(map.getRoomY() - 1);
         player.setY(ROOM_SIZE - 1);
-        drawGame(map, map_clear, player, entities);
+        drawGame(map, map_clear, player);
         showStatistics(player, entities);
     } else if (player.getX() + dx == -1) {
         map.setRoomX(map.getRoomX() - 1);
         player.setX(ROOM_SIZE - 1);
-        drawGame(map, map_clear, player, entities);
+        drawGame(map, map_clear, player);
         showStatistics(player, entities);
     } else if (player.getY() + dy == ROOM_SIZE) {
         map.setRoomY(map.getRoomY() + 1);
         player.setY(0);
-        drawGame(map, map_clear, player, entities);
+        drawGame(map, map_clear, player);
         showStatistics(player, entities);
     } else if (player.getX() + dx == ROOM_SIZE) {
         map.setRoomX(map.getRoomX() + 1);
         player.setX(0);
-        drawGame(map, map_clear, player, entities);
+        drawGame(map, map_clear, player);
         showStatistics(player, entities);
     } else if (!player.checkCollisionWithEnemies(dx, dy, entities)) {
-        player.move(dx, dy, entities, roomMap);
-        drawGame(map, map_clear, player, entities);
+        player.move(dx, dy, roomMap);
+        drawGame(map, map_clear, player);
         showStatistics(player, entities);
     } else {
         Entity &enemy{player.collisionWithEnemy(dx, dy, entities)};
@@ -49,7 +50,7 @@ void playGame(Map &map,
             }
 
             fighting(player, enemy, i);
-            drawGame(map, map_clear, player, entities);
+            drawGame(map, map_clear, player);
             showStatistics(player, entities);
             if (i < 3) {
                 Sleep(500);

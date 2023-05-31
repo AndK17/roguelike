@@ -11,6 +11,6 @@ void drawStatistics(Player &player, Entity &enemy);
 
 void clearConsole();
 
-void showStatistics(Player &player, std::vector<Entity *> &entities);
+void showStatistics(Player &player, std::vector<Entity> &entities);
 
 COORD makeCoord(int x, int y);
