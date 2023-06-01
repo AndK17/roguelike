@@ -64,9 +64,9 @@ public:
           std::string name);
 };
 
-class Goblin : public Enemy {
+class Wolf : public Enemy {
 public:
-    Goblin(int x, int y);
+    Wolf(int x, int y);
 };
 
 class Slime : public Enemy {
@@ -74,9 +74,25 @@ public:
     Slime(int x, int y);
 };
 
-class Wolf : public Enemy {
+class Goblin : public Enemy {
 public:
-    Wolf(int x, int y);
+    Goblin(int x, int y);
 };
+
+class Orc : public Enemy {
+public:
+    Orc(int x, int y);
+};
+
+class Vampire : public Enemy {
+public:
+    Vampire(int x, int y);
+};
+
+class Demon : public Enemy {
+public:
+    Demon(int x, int y);
+};
+
 
 void fighting(Player &player, Entity &enemy, int stage);

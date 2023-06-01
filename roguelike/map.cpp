@@ -2,7 +2,6 @@
 
 #include "map.hpp"
 
-
 int random(int upper, int lower) {
     static std::mt19937 mt{std::random_device{}()};
     return lower + mt() % (upper - lower + 1);
@@ -10,10 +9,10 @@ int random(int upper, int lower) {
 
 void Room::draw_map() {
     for (int i = 0; i < size; i++) {
-        map[0][i] = glb::borderSymbol;
-        map[i][0] = glb::borderSymbol;
-        map[size - 1][i] = glb::borderSymbol;
-        map[i][size - 1] = glb::borderSymbol;
+        map[0][i] = glb::symbol["border"];
+        map[i][0] = glb::symbol["border"];
+        map[size - 1][i] = glb::symbol["border"];
+        map[i][size - 1] = glb::symbol["border"];
     }
 
     if (get_left())
@@ -35,7 +34,6 @@ Room::Room(bool left, bool up, bool right, bool down) {
 
     draw_map();
     generate_obstacles();
-    generate_enemies();
 }
 
 std::vector<std::vector<char>> &Room::getMap() {
@@ -70,8 +68,7 @@ std::array<bool, 4> &Room::get_doors() {
     return doors;
 }
 
-std::vector<Entity> & Room::get_entiteis()
-{
+std::vector<Entity> &Room::get_entities() {
     return entities;
 }
 
@@ -103,128 +100,115 @@ void Room::set_room_num(int tmp) {
     room_num = tmp;
 }
 
-void Room::generate_obstacles()
-{
+void Room::generate_obstacles() {
     int obstacles_count = random(6, 2);
-    for(int i = 0; i < obstacles_count; i++)
-    {
-        switch (random(5))
-        {
+    for (int i = 0; i < obstacles_count; i++) {
+        switch (random(5)) {
         case 0:
-            map[random(size-3, 2)][random(size-3, 2)] = glb::borderSymbol;
+            map[random(size - 3, 2)][random(size - 3, 2)] = glb::symbol["border"];
             break;
-        case 1:
-            {
-            int pos = random(size-5, 2);
-            int y = random(size-3, 2);
-            for(int j = 0; j < 3; j++)
-            {
-                map[y][pos + j] = glb::borderSymbol;
+        case 1: {
+            int pos = random(size - 5, 2);
+            int y = random(size - 3, 2);
+            for (int j = 0; j < 3; j++) {
+                map[y][pos + j] = glb::symbol["border"];
             }
+        } break;
+        case 2: {
+            int pos = random(size - 5, 2);
+            int x = random(size - 3, 2);
+            for (int j = 0; j < 3; j++) {
+                map[pos + j][x] = glb::symbol["border"];
             }
-            break;
-        case 2:
-            {
-            int pos = random(size-5, 2);
-            int x = random(size-3, 2);
-            for(int j = 0; j < 3; j++)
-            {
-                map[pos + j][x] = glb::borderSymbol;
-            }
-            }
-            break;
-        case 3:
-            {
-            int pos = random(size-5, 2);
-            int x = random(size-5, 2);
-            for(int j = 0; j < 3; j++)
-            {
-                map[pos + j][x] = glb::borderSymbol;
+        } break;
+        case 3: {
+            int pos = random(size - 5, 2);
+            int x = random(size - 5, 2);
+            for (int j = 0; j < 3; j++) {
+                map[pos + j][x] = glb::symbol["border"];
             }
             pos = pos + 2;
-            for(int j = 0; j < 3; j++)
-            {
-                map[pos][x + j] = glb::borderSymbol;
+            for (int j = 0; j < 3; j++) {
+                map[pos][x + j] = glb::symbol["border"];
             }
-            }
-            break;
-        case 4:
-            {
-            int pos = random(size-5, 2);
-            int x = random(size-5, 2);
-            for(int j = 0; j < 3; j++)
-            {
-                map[x][pos + j] = glb::borderSymbol;
+        } break;
+        case 4: {
+            int pos = random(size - 5, 2);
+            int x = random(size - 5, 2);
+            for (int j = 0; j < 3; j++) {
+                map[x][pos + j] = glb::symbol["border"];
             }
             pos = pos + 2;
-            for(int j = 0; j < 3; j++)
-            {
-                map[x + j][pos] = glb::borderSymbol;
+            for (int j = 0; j < 3; j++) {
+                map[x + j][pos] = glb::symbol["border"];
             }
+        } break;
+        case 5: {
+            int pos = random(size - 5, 2);
+            int x = random(size - 5, 2);
+            for (int j = 0; j < 3; j++) {
+                map[x][pos + j] = glb::symbol["border"];
             }
-            break;
-        case 5:
-            {
-            int pos = random(size-5, 2);
-            int x = random(size-5, 2);
-            for(int j = 0; j < 3; j++)
-            {
-                map[x][pos + j] = glb::borderSymbol;
+            for (int j = 0; j < 3; j++) {
+                map[x + j][pos] = glb::symbol["border"];
             }
-            for(int j = 0; j < 3; j++)
-            {
-                map[x + j][pos] = glb::borderSymbol;
-            }
-            }
-            break;
+        } break;
         }
     }
 }
 
-bool check_enemy_pos(int x, int y, std::vector<Entity> &entities)
-{
-    for(auto entity: entities)
-    {
-        if (x == entity.getX() && y == entity.getY()) 
-        return true;
+bool check_enemy_pos(int x, int y, std::vector<Entity> &entities) {
+    for (auto entity : entities) {
+        if (x == entity.getX() && y == entity.getY())
+            return true;
     }
     return false;
 }
 
-void Room::generate_enemies()
-{
+void Room::generate_enemies(int len) {
     int enemies_count = random(10, 7);
+    int section = len / 3;
+
+    std::cout << section << std::endl;
+
     for (int i = 0; i < enemies_count; i++) {
-        int typeEnemy = random(3, 1);
+        int typeEnemy = random(1);
         int x = random(glb::roomSize - 2, 1);
         int y = random(glb::roomSize - 2, 1);
-        while (map[x][y] != glb::emptySymbol || (x == size/2 && y == size/2) || check_enemy_pos(x, y, entities))
-        {
+        while (map[x][y] != glb::emptySymbol || (x == size / 2 && y == size / 2) || check_enemy_pos(x, y, entities)) {
             x = random(glb::roomSize - 2, 1);
             y = random(glb::roomSize - 2, 1);
         }
-        
-        switch (typeEnemy) {
+
+        switch (int((room_num - 1) / 2)) {
+        case 0:
+            if (typeEnemy == 0) {
+                entities.push_back(Wolf(x, y));
+            } else if (typeEnemy == 1) {
+                entities.push_back(Slime(x, y));
+            }
+            break;
+
         case 1:
-            entities.push_back(
-                Goblin(x, y));
+            if (typeEnemy == 0) {
+                entities.push_back(Goblin(x, y));
+            } else if (typeEnemy == 1) {
+                entities.push_back(Orc(x, y));
+            }
             break;
-
         case 2:
-            entities.push_back(
-                Slime(x, y));
-            break;
-
-        case 3:
-            entities.push_back(
-                Wolf(x, y));
+            if (typeEnemy == 0) {
+                entities.push_back(Vampire(x, y));
+            } else if (typeEnemy == 1) {
+                entities.push_back(Demon(x, y));
+            }
             break;
         }
     }
 }
 
-void Map::setNullMap() {
-    map = std::vector<std::vector<Room>>(size, std::vector<Room>(size, NULL));
+void Map::setNullMap(int len) {
+    map = std::vector<std::vector<Room>>(size, std::vector<Room>(size, Room(len)));
 }
 
 void Map::setLen(int len) {
@@ -232,7 +216,7 @@ void Map::setLen(int len) {
         len = len;
         size = len * 2 - 1;
         roomX = roomY = size / 2;
-        Map::setNullMap();
+        Map::setNullMap(len);
     }
 }
 
@@ -324,18 +308,20 @@ Map::Map(int len) {
     setLen(len);
     int x = size / 2;
     int y = size / 2;
+
     Room room(false);
     int next_pos;
 
     for (int i{0}; i < len; i++) {
-        room.set_room_num(i+1);
-        if (i == len - 1) 
+        room.set_room_num(i + 1);
+        room.generate_enemies(len);
+        if (i == len - 1)
             room.set_is_finish(true);
         if (i != len - 1)
             next_pos = change_randrom_door(room);
 
         map[x][y] = room;
-        
+
         switch (next_pos) {
         case 0:
             y -= 1;

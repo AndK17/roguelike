@@ -21,7 +21,7 @@ public:
     bool get_is_finish();
     int get_room_num();
     std::array<bool, 4> &get_doors();
-    std::vector<Entity> &get_entiteis();
+    std::vector<Entity> &get_entities();
     void set_left(bool tmp);
     void set_up(bool tmp);
     void set_right(bool tmp);
@@ -29,7 +29,7 @@ public:
     void set_is_finish(bool tmp);
     void set_room_num(int tmp);
     void generate_obstacles();
-    void generate_enemies();
+    void generate_enemies(int len);
 
 protected:
     int size = glb::roomSize;
@@ -45,7 +45,7 @@ class Map {
 public:
     Map(int len);
     void setLen(int len);
-    void setNullMap();
+    void setNullMap(int len);
     void setRoomX(int x);
     void setRoomY(int y);
     int getSize();

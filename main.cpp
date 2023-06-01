@@ -15,13 +15,13 @@ int draw_menu(std::vector<std::string> &menu_points) {
         SetConsoleCursorPosition(hStdOut, makeCoord(0, 0));
         for (int i = 0; i < menu_points.size(); i++) {
             if (i == pos) {
-                SetConsoleTextAttribute(hStdOut, color_cyan);
+                SetConsoleTextAttribute(hStdOut, glb::color_cyan);
                 std::cout << "-> ";
             } else {
                 std::cout << "   ";
             }
             std::cout << menu_points[i] << "\n";
-            SetConsoleTextAttribute(hStdOut, color_white);
+            SetConsoleTextAttribute(hStdOut, glb::color_white);
         }
 
         char input;
@@ -43,11 +43,10 @@ void start_game() {
 
     system("cls");
     // Generate map
-    Map map(3);
+    Map map(6);
     Map map_clear(map);
 
     drawGame(map, map_clear, player);
-    drawStatistics(player);
 
     // Game loop
     while (player.getHealth() > 0) {
@@ -62,7 +61,7 @@ void start_game() {
         }
     }
 
-    player.setSymbol(glb::deathPlayerSymbol);
+    player.setSymbol(glb::symbol["deathPlayer"]);
     playGame(map, map_clear, player, '1');
     std::cout << std::endl
               << "Game over!" << std::endl;

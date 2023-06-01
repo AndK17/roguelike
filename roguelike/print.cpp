@@ -18,7 +18,7 @@ COORD getInfoCOORD(int y) {
 }
 
 void drawGame(Map &map, Map &map_clear, Player &player) {
-    std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entiteis();
+    std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entities();
     std::vector<std::vector<char>> roomMap =
         map_clear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
@@ -34,56 +34,42 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
     for (auto row : roomMap) {
         for (auto c : row) {
-            if (c == glb::playerSymbol || c == glb::deathPlayerSymbol) {
-                SetConsoleTextAttribute(hStdOut, Player{0, 0}.getColor());
-            } else if (c == glb::enemySymbol["goblin"]) {
-                SetConsoleTextAttribute(hStdOut, Goblin{0, 0}.getColor());
-            } else if (c == glb::enemySymbol["slime"]) {
-                SetConsoleTextAttribute(hStdOut, Slime{0, 0}.getColor());
-            } else if (c == glb::enemySymbol["wolf"]) {
-                SetConsoleTextAttribute(hStdOut, Wolf{0, 0}.getColor());
-            } else if (c == glb::borderSymbol) {
-                SetConsoleTextAttribute(hStdOut, color_yellow);
-            } else if (c == glb::deathSymbol) {
-                SetConsoleTextAttribute(hStdOut, color_gray);
+            if (c == glb::playerSymbol) {
+                SetConsoleTextAttribute(hStdOut, glb::color["player"]);
             } else {
-                SetConsoleTextAttribute(hStdOut, color_white);
+                for (auto iter = cbegin(glb::symbol); iter != cend(glb::symbol); ++iter) {
+                    if (c == iter->second) {
+                        SetConsoleTextAttribute(hStdOut, glb::color[iter->first]);
+                    }
+                }
             }
             std::cout << c << ' ';
         }
         std::cout << std::endl;
     }
 
-    SetConsoleTextAttribute(hStdOut, color_white);
+    SetConsoleTextAttribute(hStdOut, glb::color_white);
 }
 
-void drawStatistics(Player &player) {
-    SetConsoleTextAttribute(hStdOut, color_white);
+void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) {
+    SetConsoleTextAttribute(hStdOut, glb::color_white);
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
+    std::cout << "room " << roomNum;
 
+    SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
     std::cout << glb::playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
-              << ", Damage: " << player.getDamage() << std::endl;
+              << ", Damage: " << player.getDamage();
 
-    SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
-}
-
-void drawStatistics(Player &player, std::vector<Entity> &entities) {
-    SetConsoleTextAttribute(hStdOut, color_white);
-    SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
-
-    std::cout << glb::playerSymbol << " (" << player.getName()
-              << ") - HP: " << player.getHealth()
-              << ", Damage: " << player.getDamage() << std::endl;
-    for (int i = 0; i < entities.size(); ++i)
-        if (entities[i].getSymbol() != glb::deathSymbol) {
-            SetConsoleCursorPosition(hStdOut, getInfoCOORD(i + 1));
-
-            std::cout << glb::enemySymbol[entities[i].getName()] << " (" << entities[i].getName()
-                      << ") - HP: " << entities[i].getHealth()
-                      << ", Damage: " << entities[i].getDamage() << std::endl;
-        }
-
+    if (!entities.empty()) {
+        for (int i = 0; i < entities.size(); ++i)
+            if (entities[i].getSymbol() != glb::symbol["death"]) {
+                SetConsoleCursorPosition(hStdOut, getInfoCOORD(i + 2));
+                std::cout << glb::symbol[entities[i].getName()] << " (" << entities[i].getName()
+                          << ") - HP: " << entities[i].getHealth()
+                          << ", Damage: " << entities[i].getDamage();
+            }
+    }
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
@@ -92,14 +78,5 @@ void clearConsole() {
     for (int i = 0; i < 25; ++i) {
         std::cout << "                                                                                               "
                   << std::endl;
-    }
-}
-
-void showStatistics(Player &player, std::vector<Entity> &entities) {
-    std::vector<Entity> neighbourEnenmies = player.neighbourWithEnemy(entities);
-    if (!neighbourEnenmies.empty()) {
-        drawStatistics(player, neighbourEnenmies);
-    } else {
-        drawStatistics(player);
     }
 }

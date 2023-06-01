@@ -58,11 +58,11 @@ void Entity::attack(Entity &other) {
 
 // Player class, inherits from Entity
 Player::Player(int x, int y)
-    : Entity(x, y, glb::playerSymbol, 100, 30, color_red, "player") {}
+    : Entity(x, y, glb::playerSymbol, 100, 30, glb::color["player"], "player") {}
 
 // Moves the player, checking for collision with walls and enemies
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
-    if (map[getX() + dx][getY() + dy] == glb::borderSymbol)
+    if (map[getX() + dx][getY() + dy] == glb::symbol["border"])
         return;
 
     // Move the player if no collision
@@ -76,7 +76,6 @@ void Player::attack(Entity &other) {
     }
 }
 
-
 Entity *Player::collisionWithEnemy(int dx, int dy,
                                    std::vector<Entity> &enemies) {
     for (auto &enemy : enemies) {
@@ -87,9 +86,8 @@ Entity *Player::collisionWithEnemy(int dx, int dy,
     return nullptr;
 }
 
-
 std::vector<Entity> Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
-    std::vector<Entity> neighbourEnenmies {};
+    std::vector<Entity> neighbourEnenmies{};
     for (auto &enemy : enemies) {
         if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
@@ -106,18 +104,27 @@ Enemy::Enemy(int x, int y, char symbol, int health, int damage, int color,
              std::string name)
     : Entity(x, y, symbol, health, damage, color, name) {}
 
-Goblin::Goblin(int x, int y)
-    : Enemy(x, y, glb::enemySymbol["goblin"], 60, 20, color_dark_green, "goblin") {}
+Wolf::Wolf(int x, int y)
+    : Enemy(x, y, glb::symbol["wolf"], 40, 15, glb::color["wolf"], "wolf") {}
 
 Slime::Slime(int x, int y)
-    : Enemy(x, y, glb::enemySymbol["slime"], 50, 30, color_blue, "slime") {}
+    : Enemy(x, y, glb::symbol["slime"], 50, 20, glb::color["slime"], "slime") {}
 
-Wolf::Wolf(int x, int y)
-    : Enemy(x, y, glb::enemySymbol["wolf"], 40, 40, color_light_gray, "wolf") {}
+Goblin::Goblin(int x, int y)
+    : Enemy(x, y, glb::symbol["goblin"], 90, 35, glb::color["goblin"], "goblin") {}
+
+Orc::Orc(int x, int y)
+    : Enemy(x, y, glb::symbol["orc"], 110, 40, glb::color["orc"], "orc") {}
+
+Vampire::Vampire(int x, int y)
+    : Enemy(x, y, glb::symbol["vampire"], 160, 50, glb::color["vampire"], "vampire") {}
+
+Demon::Demon(int x, int y)
+    : Enemy(x, y, glb::symbol["demon"], 185, 60, glb::color["demon"], "demon") {}
 
 void fighting(Player &player, Entity &enemy, int stage) {
     char player_symbol = glb::playerSymbol;
-    char enemy_symbol = glb::enemySymbol[enemy.getName()];
+    char enemy_symbol = glb::symbol[enemy.getName()];
     switch (stage) {
     case 0:
         // player attack
@@ -128,7 +135,7 @@ void fighting(Player &player, Entity &enemy, int stage) {
     case 1:
         // player return
         if (enemy.getHealth() == 0) {
-            enemy.setSymbol(glb::deathSymbol);
+            enemy.setSymbol(glb::symbol["death"]);
         } else {
             enemy.setSymbol(enemy_symbol);
         }

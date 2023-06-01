@@ -3,32 +3,30 @@
 
 namespace glb {
 constexpr char playerSymbol = '@';
-constexpr char deathSymbol = 'X';
-constexpr char deathPlayerSymbol = '!';
-
-
-inline std::map<std::string, char> enemySymbol{
-    {"goblin", 'G'}, {"slime", 'S'}, {"wolf", 'W'}};
-
 constexpr int roomSize = 20;
-constexpr char borderSymbol = '#';
 constexpr char emptySymbol = ' ';
 
-} // namespace glb
+constexpr int color_black = 0;
+constexpr int color_dark_blue = 1;
+constexpr int color_dark_green = 2;
+constexpr int color_light_blue = 3;
+constexpr int color_dark_red = 4;
+constexpr int color_magenta = 5;
+constexpr int color_orange = 6;
+constexpr int color_light_gray = 7;
+constexpr int color_gray = 8;
+constexpr int color_blue = 9;
+constexpr int color_green = 10;
+constexpr int color_cyan = 11;
+constexpr int color_red = 12;
+constexpr int color_pink = 13;
+constexpr int color_yellow = 14;
+constexpr int color_white = 15;
 
-#define color_black 0
-#define color_dark_blue 1
-#define color_dark_green 2
-#define color_light_blue 3
-#define color_dark_red 4
-#define color_magenta 5
-#define color_orange 6
-#define color_light_gray 7
-#define color_gray 8
-#define color_blue 9
-#define color_green 10
-#define color_cyan 11
-#define color_red 12
-#define color_pink 13
-#define color_yellow 14
-#define color_white 15
+inline std::map<std::string, char> symbol{
+    {"wolf", 'W'}, {"slime", 'S'}, {"goblin", 'G'}, {"orc", 'O'}, {"vampire", 'V'}, {"demon", 'D'}, {"death", 'X'}, {"deathPlayer", '!'}, {"border", '#'}};
+
+inline std::map<std::string, int> color{
+    {"wolf", color_light_gray}, {"slime", color_blue}, {"goblin", color_green}, {"orc", color_cyan}, {"vampire", color_dark_red}, {"demon", color_magenta}, {"death", color_gray}, {"deathPlayer", color_red}, {"border", color_yellow}, {"player", color_red}};
+
+} 
