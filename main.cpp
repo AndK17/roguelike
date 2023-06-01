@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "roguelike/control.hpp"
-// #include "roguelike/menu.hpp"
 
 int draw_menu(std::vector<std::string> &menu_points)
 {
@@ -34,10 +33,6 @@ int draw_menu(std::vector<std::string> &menu_points)
             pos++;
         }else if (input == 13) {
             break;
-        }
-        else{
-            std::cout<<input<<"\n";
-            while(1){}
         }
     }
     return pos;
@@ -102,6 +97,7 @@ void main_menu()
     {
     case 0:
         start_game();
+        main_menu();
         break;
     case 1:
         settings();
