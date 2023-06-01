@@ -43,7 +43,7 @@ void start_game() {
 
     system("cls");
     // Generate map
-    Map map(6);
+    Map map(3);
     Map map_clear(map);
 
     drawGame(map, map_clear, player);
@@ -61,7 +61,7 @@ void start_game() {
         }
     }
 
-    player.setSymbol(glb::symbol["deathPlayer"]);
+    player.setSymbol(glb::symbol["death"]);
     playGame(map, map_clear, player, '1');
     std::cout << std::endl
               << "Game over!" << std::endl;
@@ -89,6 +89,7 @@ void main_menu() {
     switch (pos) {
     case 0:
         start_game();
+        main_menu();
         break;
     case 1:
         settings();
