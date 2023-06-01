@@ -180,7 +180,7 @@ void Room::generate_enemies(int len) {
             y = random(glb::roomSize - 2, 1);
         }
 
-        switch (int((room_num - 1) / 2)) {
+        switch (int((room_num - 1) / section)) {
         case 0:
             if (typeEnemy == 0) {
                 entities.push_back(Wolf(x, y));
