@@ -1,5 +1,11 @@
 #include "entities.hpp"
 
+char playerSymbol = '@';
+
+void changePlayerSymbol(char s) {
+    playerSymbol = s;
+}
+
 Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
                std::string name)
     : x{x}, y{y} {
@@ -58,7 +64,7 @@ void Entity::attack(Entity &other) {
 
 // Player class, inherits from Entity
 Player::Player(int x, int y)
-    : Entity(x, y, glb::playerSymbol, 100, 30, glb::color["player"], "player") {}
+    : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player") {}
 
 // Moves the player, checking for collision with walls and enemies
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
@@ -123,7 +129,7 @@ Demon::Demon(int x, int y)
     : Enemy(x, y, glb::symbol["demon"], 185, 60, glb::color["demon"], "demon") {}
 
 void fighting(Player &player, Entity &enemy, int stage) {
-    char player_symbol = glb::playerSymbol;
+    char player_symbol = playerSymbol;
     char enemy_symbol = glb::symbol[enemy.getName()];
     switch (stage) {
     case 0:

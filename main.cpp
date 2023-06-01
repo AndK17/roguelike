@@ -67,12 +67,29 @@ void start_game() {
               << "Game over!" << std::endl;
 }
 
+void selectSymbol() {
+    std::vector<std::string> select_points{"@", "+", "P"};
+    int pos = draw_menu(select_points);
+    switch (pos) {
+    case 0:
+        changePlayerSymbol('@');
+        break;
+    case 1:
+        changePlayerSymbol('+');
+        break;
+    case 2:
+        changePlayerSymbol('P');
+        break;
+    }
+}
+
 void settings() {
-    std::vector<std::string> settings_points{"Change player symbol", "Sound ON/OFF", "Back"};
+    std::vector<std::string> settings_points{"Select symbol", "Sound ON/OFF", "Back"};
     int pos = draw_menu(settings_points);
     switch (pos) {
     case 0:
-        // TODO
+        selectSymbol();
+        settings();
         break;
     case 1:
         // TODO
@@ -96,7 +113,7 @@ void main_menu() {
         main_menu();
         break;
     case 2:
-        std::cout << "Goodbye!" << std::endl;
+        std::cout << std::endl << "   Goodbye!" << std::endl;
         break;
     }
 }

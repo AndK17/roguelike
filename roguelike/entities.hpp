@@ -4,7 +4,7 @@
 
 #include "config.hpp"
 
-
+void changePlayerSymbol(char s);
 
 class Entity {
 public:

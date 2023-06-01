@@ -2,6 +2,7 @@
 
 #include "print.hpp"
 
+
 static COORD topLeftCorner = makeCoord(0, 0);
 
 static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
@@ -34,7 +35,7 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
     for (auto row : roomMap) {
         for (auto c : row) {
-            if (c == glb::playerSymbol) {
+            if (c == playerSymbol) {
                 SetConsoleTextAttribute(hStdOut, glb::color["player"]);
             } else {
                 for (auto iter = cbegin(glb::symbol); iter != cend(glb::symbol); ++iter) {
@@ -57,7 +58,7 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) 
     std::cout << "room " << roomNum;
 
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
-    std::cout << glb::playerSymbol << " (" << player.getName()
+    std::cout << playerSymbol << " (" << player.getName()
               << ") - HP: " << player.getHealth()
               << ", Damage: " << player.getDamage();
 

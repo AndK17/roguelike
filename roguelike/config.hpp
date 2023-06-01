@@ -1,8 +1,9 @@
 #include <map>
 #include <string>
 
+extern char playerSymbol;
+
 namespace glb {
-constexpr char playerSymbol = '@';
 constexpr int roomSize = 20;
 constexpr char emptySymbol = ' ';
 
