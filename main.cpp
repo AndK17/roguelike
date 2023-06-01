@@ -5,24 +5,22 @@
 #include <vector>
 
 #include "roguelike/control.hpp"
-// #include "roguelike/menu.hpp"
 
-int draw_menu(std::vector<std::string> &menu_points)
-{
+
+int draw_menu(std::vector<std::string> &menu_points) {
     system("cls");
     int pos = 0;
     while (1) {
         clearConsole();
         SetConsoleCursorPosition(hStdOut, makeCoord(0, 0));
-        for (int i = 0; i < menu_points.size(); i++)
-        {
-            if (i == pos){
+        for (int i = 0; i < menu_points.size(); i++) {
+            if (i == pos) {
                 SetConsoleTextAttribute(hStdOut, color_cyan);
-                std::cout<<"-> ";
-            }else{
-                std::cout<<"   ";
+                std::cout << "-> ";
+            } else {
+                std::cout << "   ";
             }
-            std::cout<<menu_points[i]<<"\n";
+            std::cout << menu_points[i] << "\n";
             SetConsoleTextAttribute(hStdOut, color_white);
         }
 
@@ -30,23 +28,17 @@ int draw_menu(std::vector<std::string> &menu_points)
         input = _getwch();
         if (input == 'w' && pos > 0) {
             pos--;
-        } else if (input == 's' && pos < 2) {
+        } else if (input == 's' && pos < menu_points.size() - 1) {
             pos++;
-        }else if (input == 13) {
+        } else if (input == 13) {
             break;
-        }
-        else{
-            std::cout<<input<<"\n";
-            while(1){}
         }
     }
     return pos;
 }
 
-
-void start_game()
-{
-    // Initialize player and enemies
+void start_game() {
+    // Initialize player
     Player player(glb::roomSize / 2, glb::roomSize / 2);
 
     system("cls");
@@ -76,30 +68,26 @@ void start_game()
               << "Game over!" << std::endl;
 }
 
-void settings()
-{
-    std::vector<std::string> settings_points{"Change player simbol", "sound ON/OFF", "Back"};
+void settings() {
+    std::vector<std::string> settings_points{"Change player symbol", "Sound ON/OFF", "Back"};
     int pos = draw_menu(settings_points);
-    switch (pos)
-    {
+    switch (pos) {
     case 0:
-        //TODO
+        // TODO
         break;
     case 1:
-        //TODO
+        // TODO
         break;
     case 2:
         break;
     }
 }
 
-void main_menu()
-{
+void main_menu() {
     std::vector<std::string> menu_points{"Start game", "Settings", "Exit"};
     int pos = draw_menu(menu_points);
 
-    switch (pos)
-    {
+    switch (pos) {
     case 0:
         start_game();
         break;
@@ -108,7 +96,7 @@ void main_menu()
         main_menu();
         break;
     case 2:
-        std::cout<< "Goodbye!" << std::endl;
+        std::cout << "Goodbye!" << std::endl;
         break;
     }
 }
