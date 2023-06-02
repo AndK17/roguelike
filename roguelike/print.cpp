@@ -30,9 +30,6 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
 
     clearConsole();
 
-    // Set console cursor at top left corner
-    SetConsoleCursorPosition(hStdOut, topLeftCorner);
-
     for (auto row : roomMap) {
         for (auto c : row) {
             if (c == playerSymbol) {
@@ -89,10 +86,12 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, 
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
+// Clear console and set cursor at top left corner
 void clearConsole() {
     SetConsoleCursorPosition(hStdOut, topLeftCorner);
     for (int i = 0; i < 25; ++i) {
         std::cout << "                                                                                               "
                   << std::endl;
     }
+    SetConsoleCursorPosition(hStdOut, topLeftCorner);
 }

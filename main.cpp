@@ -8,12 +8,19 @@
 
 int len = 6;
 
+void show_screen(std::string screen)
+{
+    clearConsole();
+    std::cout<<screen;
+    std::cout<<"\nPress any button to continue";
+    char input = _getwch();
+}
+
 int draw_menu(std::vector<std::string> &menu_points) {
     system("cls");
     int pos = 0;
     while (1) {
         clearConsole();
-        SetConsoleCursorPosition(hStdOut, makeCoord(0, 0));
         for (int i = 0; i < menu_points.size(); i++) {
             if (i == pos) {
                 SetConsoleTextAttribute(hStdOut, glb::color_cyan);
@@ -63,6 +70,7 @@ void start_game() {
     }
 
     player.setSymbol(glb::symbol["death"]);
+    show_screen(screens::you_died);
     playGame(map, map_clear, player, '1');
     std::cout << std::endl
               << "Game over!" << std::endl;
@@ -140,22 +148,11 @@ void main_menu() {
     }
 }
 
-void welcome_menu()
-{
-    std::cout<<"                            _ _ _        \n"
-               " _ __ ___   __ _ _   _  ___| (_) | _____ \n"
-               "| '__/ _ \\ / _` | | | |/ _ \\ | | |/ / _ \\ \n"
-               "| | | (_) | (_| | |_| |  __/ | |   <  __/\n"
-               "|_|  \\___/ \\__, |\\__,_|\\___|_|_|_|\\_\\___|\n"
-               "           |___/                           \n";
-    std::cout<<"\nPress any button to start";
-    char input = _getwch();
-}
 
 int main() {
     system("cls");
     
-    welcome_menu();
+    show_screen(screens::roguelike);
 
     main_menu();
 
