@@ -6,6 +6,7 @@
 
 #include "roguelike/control.hpp"
 
+int len = 6;
 
 int draw_menu(std::vector<std::string> &menu_points) {
     system("cls");
@@ -43,7 +44,7 @@ void start_game() {
 
     system("cls");
     // Generate map
-    Map map(3);
+    Map map(len);
     Map map_clear(map);
 
     drawGame(map, map_clear, player);
@@ -83,8 +84,24 @@ void selectSymbol() {
     }
 }
 
+void selectDifficulty() {
+    std::vector<std::string> select_points{"easy", "medium", "hard"};
+    int pos = draw_menu(select_points);
+    switch (pos) {
+    case 0:
+        len = 3;
+        break;
+    case 1:
+        len = 6;
+        break;
+    case 2:
+        len = 9;
+        break;
+    }
+}
+
 void settings() {
-    std::vector<std::string> settings_points{"Select symbol", "Sound ON/OFF", "Back"};
+    std::vector<std::string> settings_points{"Select symbol", "Select difficulty", "Back"};
     int pos = draw_menu(settings_points);
     switch (pos) {
     case 0:
@@ -92,7 +109,8 @@ void settings() {
         settings();
         break;
     case 1:
-        // TODO
+        selectDifficulty();
+        settings();
         break;
     case 2:
         break;
