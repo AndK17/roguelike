@@ -166,10 +166,8 @@ bool check_enemy_pos(int x, int y, std::vector<Entity> &entities) {
 }
 
 void Room::generate_enemies(int len) {
-    int enemies_count = random(10, 7);
+    int enemies_count = random(5, 3);
     int section = len / 3;
-
-    std::cout << section << std::endl;
 
     for (int i = 0; i < enemies_count; i++) {
         int typeEnemy = random(1);
@@ -180,7 +178,7 @@ void Room::generate_enemies(int len) {
             y = random(glb::roomSize - 2, 1);
         }
 
-        switch (int((room_num - 1) / section)) {
+        switch ((room_num - 1) / section) {
         case 0:
             if (typeEnemy == 0) {
                 entities.push_back(Wolf(x, y));
@@ -204,6 +202,20 @@ void Room::generate_enemies(int len) {
             }
             break;
         }
+    }
+}
+
+void Room::generateChest(int len) {
+    switch (random(2)) {
+    case 0:
+        entities.push_back(Chest(20, 10));
+        break;
+    case 1:
+        entities.push_back(Chest(35, 15));
+        break;
+    case 2:
+        entities.push_back(Chest(50, 20));
+        break;
     }
 }
 
@@ -252,7 +264,7 @@ std::vector<std::vector<Room>> &Map::getMap() {
     return map;
 }
 
-int change_randrom_door(Room &room) {
+int change_random_door(Room &room) {
     int c = 4;
     if (room.get_left())
         c -= 1;
@@ -318,7 +330,7 @@ Map::Map(int len) {
         if (i == len - 1)
             room.set_is_finish(true);
         if (i != len - 1)
-            next_pos = change_randrom_door(room);
+            next_pos = change_random_door(room);
 
         map[x][y] = room;
 

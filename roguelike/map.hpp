@@ -30,6 +30,7 @@ public:
     void set_room_num(int tmp);
     void generate_obstacles();
     void generate_enemies(int len);
+    void generateChest(int len);
 
 protected:
     int size = glb::roomSize;

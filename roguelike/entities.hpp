@@ -9,7 +9,7 @@ void changePlayerSymbol(char s);
 class Entity {
 public:
     Entity(int x, int y, char symbol, int health, int damage, int color,
-           std::string name);
+           std::string name, int bonusHealth, int bonusDamage);
 
     virtual ~Entity();
 
@@ -34,6 +34,12 @@ public:
     std::string getName() const;
     void setName(std::string name);
 
+    int getBonusHealth();
+    void setBonusHealth(int hp);
+
+    int getBonusDamage();
+    void setBonusDamage(int dmg);
+
     virtual void move(int dx, int dy);
 
     virtual void attack(Entity &other);
@@ -43,12 +49,15 @@ protected:
     char symbol;
     int health, damage, color;
     std::string name;
+    int bonusHealth, bonusDamage;
 };
 
 class Player : public Entity {
 public:
     Player(int x, int y);
 
+    int getMaxHealth();
+    void setMaxHealth(int tmp);
     void move(int dx, int dy, std::vector<std::vector<char>> &map);
 
     void attack(Entity &other) override;
@@ -56,6 +65,8 @@ public:
     Entity *collisionWithEnemy(int dx, int dy, std::vector<Entity> &enemies);
 
     std::vector<Entity> neighbourWithEnemy(std::vector<Entity> &enemies);
+private:
+    int maxHealth;
 };
 
 class Enemy : public Entity {
@@ -94,5 +105,13 @@ public:
     Demon(int x, int y);
 };
 
+class Chest : public Entity {
+public:
+    Chest(int bonusHealth, int bonusDamage);
+};
 
 void fighting(Player &player, Entity &enemy, int stage);
+
+std::vector<int> chestFighting(Player &player, Entity &chest, int stage);
+
+bool isRoomClear(std::vector<Entity> &enemies);

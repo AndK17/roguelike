@@ -2,7 +2,6 @@
 
 #include "print.hpp"
 
-
 static COORD topLeftCorner = makeCoord(0, 0);
 
 static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
@@ -52,15 +51,21 @@ void drawGame(Map &map, Map &map_clear, Player &player) {
     SetConsoleTextAttribute(hStdOut, glb::color_white);
 }
 
-void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) {
+void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, std::vector<int> bonus) {
     SetConsoleTextAttribute(hStdOut, glb::color_white);
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
     std::cout << "room " << roomNum;
 
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
-    std::cout << playerSymbol << " (" << player.getName()
-              << ") - HP: " << player.getHealth()
-              << ", Damage: " << player.getDamage();
+    int healthParts{ceil(player.getHealth() / (player.getMaxHealth() / 10.0))};
+
+    std::cout << playerSymbol << " (" << player.getName() << ") - HP: [";
+    for (int i = 0; i < healthParts; i++)
+        std::cout << glb::healthSymbol;
+    for (int i = 0; i < 10 - healthParts; i++)
+        std::cout << glb::emptySymbol;
+    std::cout << "] " << player.getHealth() << "/" << player.getMaxHealth();
+    std::cout << ", Damage: " << player.getDamage();
 
     if (!entities.empty()) {
         for (int i = 0; i < entities.size(); ++i)
@@ -71,6 +76,15 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) 
                           << ", Damage: " << entities[i].getDamage();
             }
     }
+
+    if (!bonus.empty()) {
+        SetConsoleCursorPosition(hStdOut, getInfoCOORD(entities.size() + 2));
+        std::cout << "Bonus: +" << bonus[0] << " HP, +" << bonus[1] << " Damage";
+        if (random(2) == 1) {
+            std::cout << ", -100 Chinese social points";
+        }
+    }
+
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
