@@ -140,8 +140,22 @@ void main_menu() {
     }
 }
 
+void welcome_menu()
+{
+    std::cout<<"                            _ _ _        \n"
+               " _ __ ___   __ _ _   _  ___| (_) | _____ \n"
+               "| '__/ _ \\ / _` | | | |/ _ \\ | | |/ / _ \\ \n"
+               "| | | (_) | (_| | |_| |  __/ | |   <  __/\n"
+               "|_|  \\___/ \\__, |\\__,_|\\___|_|_|_|\\_\\___|\n"
+               "           |___/                           \n";
+    std::cout<<"\nPress any button to start";
+    char input = _getwch();
+}
+
 int main() {
     system("cls");
+    
+    welcome_menu();
 
     main_menu();
 
