@@ -64,8 +64,19 @@ void Entity::attack(Entity &other) {
 
 // Player class, inherits from Entity
 Player::Player(int x, int y)
-    : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player") {}
+    : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player") {
+        setMaxHealth(100);
+    }
 
+int Player::getMaxHealth()
+{
+    return maxHealth;
+}
+
+void Player::setMaxHealth(int tmp)
+{
+    maxHealth = tmp;
+}
 // Moves the player, checking for collision with walls and enemies
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
     if (map[getX() + dx][getY() + dy] == glb::symbol["border"])

@@ -49,6 +49,8 @@ class Player : public Entity {
 public:
     Player(int x, int y);
 
+    int getMaxHealth();
+    void setMaxHealth(int tmp);
     void move(int dx, int dy, std::vector<std::vector<char>> &map);
 
     void attack(Entity &other) override;
@@ -56,6 +58,8 @@ public:
     Entity *collisionWithEnemy(int dx, int dy, std::vector<Entity> &enemies);
 
     std::vector<Entity> neighbourWithEnemy(std::vector<Entity> &enemies);
+private:
+    int maxHealth;
 };
 
 class Enemy : public Entity {

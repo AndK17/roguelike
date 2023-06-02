@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "print.hpp"
 
@@ -58,9 +59,15 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) 
     std::cout << "room " << roomNum;
 
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
-    std::cout << playerSymbol << " (" << player.getName()
-              << ") - HP: " << player.getHealth()
-              << ", Damage: " << player.getDamage();
+    int healthParts{ceil(player.getHealth() /(player.getMaxHealth() / 10.0))};
+    
+    std::cout<<playerSymbol << " (" << player.getName()<< ") - HP: [";
+    for (int i = 0; i < healthParts; i++)
+        std::cout << "#";
+    for (int i = 0; i < 10 - healthParts; i++)
+        std::cout << " ";
+    std::cout<<"] "<<player.getHealth()<<"/"<<player.getMaxHealth();
+    std::cout<<", Damage: " << player.getDamage();
 
     if (!entities.empty()) {
         for (int i = 0; i < entities.size(); ++i)
@@ -70,7 +77,7 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum) 
                           << ") - HP: " << entities[i].getHealth()
                           << ", Damage: " << entities[i].getDamage();
             }
-    }
+    }    
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
