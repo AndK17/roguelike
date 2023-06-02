@@ -69,7 +69,7 @@ void start_game() {
 }
 
 void selectSymbol() {
-    std::vector<std::string> select_points{"@", "+", "P"};
+    std::vector<std::string> select_points{"@", "+", "P", "Back"};
     int pos = draw_menu(select_points);
     switch (pos) {
     case 0:
@@ -81,11 +81,13 @@ void selectSymbol() {
     case 2:
         changePlayerSymbol('P');
         break;
+    case 3:
+        break;
     }
 }
 
 void selectDifficulty() {
-    std::vector<std::string> select_points{"easy", "medium", "hard"};
+    std::vector<std::string> select_points{"easy", "medium", "hard", "Back"};
     int pos = draw_menu(select_points);
     switch (pos) {
     case 0:
@@ -97,11 +99,13 @@ void selectDifficulty() {
     case 2:
         len = 9;
         break;
+    case 3:
+        break;
     }
 }
 
 void settings() {
-    std::vector<std::string> settings_points{"Select symbol", "Select difficulty", "Back"};
+    std::vector<std::string> settings_points{"Select player symbol", "Select difficulty", "Back"};
     int pos = draw_menu(settings_points);
     switch (pos) {
     case 0:
