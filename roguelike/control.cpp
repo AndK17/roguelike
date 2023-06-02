@@ -1,6 +1,14 @@
 #include "control.hpp"
 #include <iostream>
 
+void win()
+{
+    clearConsole();
+    std::cout<<screens::you_win;
+    std::cout<<"\nPress any button to continue";
+    char input = _getwch();
+}
+
 void playGame(Map &map,
               Map &map_clear,
               Player &player,
@@ -66,7 +74,17 @@ void playGame(Map &map,
                 }
 
                 if (enemy->getName() == "chest") {
-                    bonus = chestFighting(player, *enemy, i);
+                    if (room.get_is_finish())
+                    {
+                        bonus = chestFighting(player, *enemy, 0);
+                        win();
+                        //TODO return to main menu and without you died screen 
+                        break;
+                    }
+                    else
+                    {
+                        bonus = chestFighting(player, *enemy, i);
+                    }
                 } else {
                     fighting(player, *enemy, i);
                 }
