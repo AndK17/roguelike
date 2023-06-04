@@ -88,11 +88,11 @@ public:
     void generate_obstacles();
 
     /// @brief Генерация монстров в комнате
-    /// @param len Длина лабиринта 
+    /// @param len Длина подземелья 
     void generate_enemies(int len);
 
     /// @brief Генерация сундука в комнате
-    /// @param len Длина лабиринта 
+    /// @param len Длина подземелья 
     void generateChest(int len);
 
 protected:
@@ -105,15 +105,15 @@ protected:
     std::vector<Entity> entities;
 };
 
-/// @brief Класс карты лабиринта
+/// @brief Класс карты подземелья
 class Map {
 public:
-    /// @brief Конструктор класса карты лабиринта
-    /// @param len Длина лабиринта
+    /// @brief Конструктор класса карты подземелья
+    /// @param len Длина подземелья
     Map(int len);
 
-    /// @brief Получение длины лабиринта
-    /// @return Длина лабиринта
+    /// @brief Получение длины подземелья
+    /// @return Длина подземелья
     int getLen();
 
     /// @brief Получение X координаты текущей комнаты
@@ -124,12 +124,12 @@ public:
     /// @return Y координата текущей комнаты
     int getRoomY();
 
-    /// @brief Получение карты лабиринта
-    /// @return Карта лабиринта
+    /// @brief Получение карты подземелья
+    /// @return Карта подземелья
     std::vector<std::vector<Room>> &getMap();
 
-    /// @brief Изменение длины лабиринта
-    /// @param len Длина лабиринта
+    /// @brief Изменение длины подземелья
+    /// @param len Длина подземелья
     void setLen(int len);
 
     /// @brief Генерирует пустую карту

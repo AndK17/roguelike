@@ -6,16 +6,7 @@ void changePlayerSymbol(char s) {
     playerSymbol = s;
 }
 
-/// @brief Конструктор класса Entity
-/// @param x Координата по оси OX (вертикаль)
-/// @param y Координата по оси OY (горизонталь)
-/// @param symbol Отображаемый символ
-/// @param health Количество здоровья
-/// @param damage Количество наносимого урона
-/// @param color Цвет символа в консоли
-/// @param name Имя
-/// @param bonusHealth Бонусное здоровье
-/// @param bonusDamage Бонусный урон
+
 Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
                std::string name, int bonusHealth, int bonusDamage)
     : x{x}, y{y} {
