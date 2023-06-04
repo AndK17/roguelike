@@ -1,12 +1,11 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 #include "print.hpp"
 
 static COORD topLeftCorner = makeCoord(0, 0);
 
 static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
-
 
 COORD makeCoord(int x, int y) {
     COORD coord = {(SHORT)x, (SHORT)y};
@@ -86,7 +85,6 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, 
 
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
-
 
 void clearConsole() {
     SetConsoleCursorPosition(hStdOut, topLeftCorner);

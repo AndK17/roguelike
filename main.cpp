@@ -8,11 +8,10 @@
 
 int len = 6;
 
-void show_screen(std::string screen)
-{
+void show_screen(std::string screen) {
     clearConsole();
-    std::cout<<screen;
-    std::cout<<"\nPress any button to continue";
+    std::cout << screen;
+    std::cout << "\nPress any button to continue";
     char input = _getwch();
 }
 
@@ -46,40 +45,32 @@ int draw_menu(std::vector<std::string> &menu_points) {
 }
 
 void start_game() {
-    // Initialize player
     Player player(glb::roomSize / 2, glb::roomSize / 2);
 
     system("cls");
-    // Generate map
+
     Map map(len);
     Map map_clear(map);
 
     drawGame(map, map_clear, player);
 
     bool is_win{false};
-    // Game loop
     while (player.getHealth() > 0) {
         char input;
         input = _getwch();
         if (input == 'w' || input == 'a' || input == 's' || input == 'd') {
             is_win = playGame(map, map_clear, player, input);
-            if (is_win) break;
+            if (is_win) {
+                show_screen(screens::you_win);
+            } else {
+                show_screen(screens::you_died);
+            }
+            break;
         } else if (input == 27) {
-            std::cout << std::endl
-                      << "Goodbye!" << std::endl;
             break;
         }
     }
 
-    if (is_win)
-    {
-        show_screen(screens::you_win);
-    }
-    else
-    {
-        show_screen(screens::you_died);
-    }
-    
 }
 
 void selectSymbol() {
@@ -105,13 +96,13 @@ void selectDifficulty() {
     int pos = draw_menu(select_points);
     switch (pos) {
     case 0:
-        len = 3;
+        len = 9;
         break;
     case 1:
         len = 6;
         break;
     case 2:
-        len = 9;
+        len = 3;
         break;
     case 3:
         break;
@@ -149,15 +140,15 @@ void main_menu() {
         main_menu();
         break;
     case 2:
-        std::cout << std::endl << "   Goodbye!" << std::endl;
+        std::cout << std::endl
+                  << "   Goodbye!" << std::endl;
         break;
     }
 }
 
-
 int main() {
     system("cls");
-    
+
     show_screen(screens::roguelike);
 
     main_menu();

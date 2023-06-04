@@ -6,6 +6,16 @@ void changePlayerSymbol(char s) {
     playerSymbol = s;
 }
 
+/// @brief Конструктор класса Entity
+/// @param x Координата по оси OX (вертикаль)
+/// @param y Координата по оси OY (горизонталь)
+/// @param symbol Отображаемый символ
+/// @param health Количество здоровья
+/// @param damage Количество наносимого урона
+/// @param color Цвет символа в консоли
+/// @param name Имя
+/// @param bonusHealth Бонусное здоровье
+/// @param bonusDamage Бонусный урон
 Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
                std::string name, int bonusHealth, int bonusDamage)
     : x{x}, y{y} {
@@ -20,12 +30,10 @@ Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
 
 Entity::~Entity() {}
 
-
 int Entity::getX() const { return x; }
 void Entity::setX(int x) { this->x = x; }
 int Entity::getY() const { return y; }
 void Entity::setY(int y) { this->y = y; }
-
 
 char Entity::getSymbol() const { return symbol; }
 void Entity::setSymbol(char c) { symbol = c; }
@@ -85,7 +93,6 @@ void Entity::attack(Entity &other) {
     other.setHealth(other.getHealth() - getDamage());
 }
 
-
 Player::Player(int x, int y)
     : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player", 0, 0) {
     setMaxHealth(100);
@@ -98,7 +105,6 @@ int Player::getMaxHealth() {
 void Player::setMaxHealth(int tmp) {
     maxHealth = tmp;
 }
-
 
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
     if (map[getX() + dx][getY() + dy] == glb::symbol["border"])
@@ -207,7 +213,7 @@ std::vector<int> chestFighting(Player &player, Entity &chest, int stage) {
             player.setMaxHealth(player.getMaxHealth() + chest.getBonusHealth());
             player.setHealth(player.getMaxHealth());
             player.setDamage(player.getDamage() + chest.getBonusDamage());
-            
+
             bonus.push_back(chest.getBonusHealth());
             bonus.push_back(chest.getBonusDamage());
         } else {

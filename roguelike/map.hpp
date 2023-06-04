@@ -4,7 +4,6 @@
 
 #include "entities.hpp"
 
-
 int random(int upper, int lower = 0);
 
 std::vector<std::vector<char>> generateMap();

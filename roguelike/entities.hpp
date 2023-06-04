@@ -65,6 +65,7 @@ public:
     Entity *collisionWithEnemy(int dx, int dy, std::vector<Entity> &enemies);
 
     std::vector<Entity> neighbourWithEnemy(std::vector<Entity> &enemies);
+
 private:
     int maxHealth;
 };

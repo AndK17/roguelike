@@ -1,12 +1,11 @@
 #include "control.hpp"
 #include <iostream>
 
-
 bool playGame(Map &map,
               Map &map_clear,
               Player &player,
               char input) {
-    
+
     int dx{0}, dy{0};
     if (input == 'w')
         dx = -1;
@@ -68,8 +67,7 @@ bool playGame(Map &map,
 
                 if (enemy->getName() == "chest") {
                     bonus = chestFighting(player, *enemy, i);
-                    if (room.get_is_finish())
-                    {
+                    if (room.get_is_finish()) {
                         return true;
                     }
                 } else {
