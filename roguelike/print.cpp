@@ -7,7 +7,7 @@ static COORD topLeftCorner = makeCoord(0, 0);
 
 static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
 
-// Make COORD
+
 COORD makeCoord(int x, int y) {
     COORD coord = {(SHORT)x, (SHORT)y};
     return coord;
@@ -55,7 +55,8 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, 
     std::cout << "room " << roomNum;
 
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
-    int healthParts{ceil(player.getHealth() / (player.getMaxHealth() / 10.0))};
+    int healthParts{0};
+    healthParts = ceil(player.getHealth() / (player.getMaxHealth() / 10.0));
 
     std::cout << playerSymbol << " (" << player.getName() << ") - HP: [";
     for (int i = 0; i < healthParts; i++)
@@ -86,7 +87,7 @@ void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, 
     SetConsoleCursorPosition(hStdOut, bottomLeftCorner);
 }
 
-// Clear console and set cursor at top left corner
+
 void clearConsole() {
     SetConsoleCursorPosition(hStdOut, topLeftCorner);
     for (int i = 0; i < 25; ++i) {

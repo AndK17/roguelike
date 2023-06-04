@@ -56,12 +56,14 @@ void start_game() {
 
     drawGame(map, map_clear, player);
 
+    bool is_win{false};
     // Game loop
     while (player.getHealth() > 0) {
         char input;
         input = _getwch();
         if (input == 'w' || input == 'a' || input == 's' || input == 'd') {
-            playGame(map, map_clear, player, input);
+            is_win = playGame(map, map_clear, player, input);
+            if (is_win) break;
         } else if (input == 27) {
             std::cout << std::endl
                       << "Goodbye!" << std::endl;
@@ -69,11 +71,15 @@ void start_game() {
         }
     }
 
-    player.setSymbol(glb::symbol["death"]);
-    show_screen(screens::you_died);
-    playGame(map, map_clear, player, '1');
-    std::cout << std::endl
-              << "Game over!" << std::endl;
+    if (is_win)
+    {
+        show_screen(screens::you_win);
+    }
+    else
+    {
+        show_screen(screens::you_died);
+    }
+    
 }
 
 void selectSymbol() {

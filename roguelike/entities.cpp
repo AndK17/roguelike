@@ -20,13 +20,13 @@ Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
 
 Entity::~Entity() {}
 
-// Getters and setters for entity's position
+
 int Entity::getX() const { return x; }
 void Entity::setX(int x) { this->x = x; }
 int Entity::getY() const { return y; }
 void Entity::setY(int y) { this->y = y; }
 
-// Getter and setter for the entity's symbol
+
 char Entity::getSymbol() const { return symbol; }
 void Entity::setSymbol(char c) { symbol = c; }
 
@@ -76,7 +76,6 @@ void Entity::setBonusDamage(int dmg) {
         bonusDamage = 0;
 }
 
-// Move the entity one square in the specified direction
 void Entity::move(int dx, int dy) {
     x += dx;
     y += dy;
@@ -86,7 +85,7 @@ void Entity::attack(Entity &other) {
     other.setHealth(other.getHealth() - getDamage());
 }
 
-// Player class, inherits from Entity
+
 Player::Player(int x, int y)
     : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player", 0, 0) {
     setMaxHealth(100);
@@ -100,12 +99,11 @@ void Player::setMaxHealth(int tmp) {
     maxHealth = tmp;
 }
 
-// Moves the player, checking for collision with walls and enemies
+
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
     if (map[getX() + dx][getY() + dy] == glb::symbol["border"])
         return;
 
-    // Move the player if no collision
     Entity::move(dx, dy);
 }
 
@@ -169,13 +167,11 @@ void fighting(Player &player, Entity &enemy, int stage) {
     char enemy_symbol = glb::symbol[enemy.getName()];
     switch (stage) {
     case 0:
-        // player attack
         player.setSymbol(' ');
         player.attack(enemy);
         enemy.setSymbol(player_symbol);
         break;
     case 1:
-        // player return
         if (enemy.getHealth() == 0) {
             enemy.setSymbol(glb::symbol["death"]);
         } else {
@@ -184,13 +180,11 @@ void fighting(Player &player, Entity &enemy, int stage) {
         player.setSymbol(player_symbol);
         break;
     case 2:
-        // enemy attack
         enemy.setSymbol(' ');
         enemy.attack(player);
         player.setSymbol(enemy_symbol);
         break;
     case 3:
-        // enemy return
         player.setSymbol(player_symbol);
         enemy.setSymbol(enemy_symbol);
         break;
@@ -203,13 +197,11 @@ std::vector<int> chestFighting(Player &player, Entity &chest, int stage) {
     std::vector<int> bonus;
     switch (stage) {
     case 0:
-        // player attack
         player.setSymbol(' ');
         player.attack(chest);
         chest.setSymbol(player_symbol);
         break;
     case 1:
-        // player return
         if (chest.getHealth() == 0) {
             chest.setSymbol(glb::symbol["death"]);
             player.setMaxHealth(player.getMaxHealth() + chest.getBonusHealth());
