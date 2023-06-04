@@ -6,7 +6,9 @@
 
 #include "roguelike/control.hpp"
 
-int len = 6;
+int len{6};
+int health{100};
+int damage{30};
 
 void show_screen(std::string screen) {
     clearConsole();
@@ -46,6 +48,9 @@ int draw_menu(std::vector<std::string> &menu_points) {
 
 void start_game() {
     Player player(glb::roomSize / 2, glb::roomSize / 2);
+    player.setMaxHealth(health);
+    player.setHealth(health);
+    player.setDamage(damage);
 
     system("cls");
 
@@ -66,6 +71,10 @@ void start_game() {
             } 
         } else if (input == 27) {
             break;
+        } else if (input == 'p') {
+            player.setMaxHealth(1000);
+            player.setHealth(1000);
+            player.setDamage(1000);
         }
     }
     if (!is_win && input != 27) show_screen(screens::you_died);
@@ -95,12 +104,18 @@ void selectDifficulty() {
     switch (pos) {
     case 0:
         len = 9;
+        health = 80;
+        damage = 25;
         break;
     case 1:
         len = 6;
+        health = 100;
+        damage = 30;
         break;
     case 2:
         len = 3;
+        health = 150;
+        damage = 60;
         break;
     case 3:
         break;
