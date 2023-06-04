@@ -55,22 +55,20 @@ void start_game() {
     drawGame(map, map_clear, player);
 
     bool is_win{false};
+    char input;
     while (player.getHealth() > 0) {
-        char input;
         input = _getwch();
         if (input == 'w' || input == 'a' || input == 's' || input == 'd') {
             is_win = playGame(map, map_clear, player, input);
             if (is_win) {
                 show_screen(screens::you_win);
-            } else {
-                show_screen(screens::you_died);
-            }
-            break;
+                break;
+            } 
         } else if (input == 27) {
             break;
         }
     }
-
+    if (!is_win && input != 27) show_screen(screens::you_died);
 }
 
 void selectSymbol() {
