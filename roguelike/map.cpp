@@ -219,8 +219,8 @@ void Room::generateChest(int len) {
     }
 }
 
-void Map::setNullMap(int len) {
-    map = std::vector<std::vector<Room>>(size, std::vector<Room>(size, Room(len)));
+void Map::setNullMap() {
+    map = std::vector<std::vector<Room>>(size, std::vector<Room>(size, Room()));
 }
 
 void Map::setLen(int len) {
@@ -228,7 +228,7 @@ void Map::setLen(int len) {
         len = len;
         size = len * 2 - 1;
         roomX = roomY = size / 2;
-        Map::setNullMap(len);
+        Map::setNullMap();
     }
 }
 
@@ -242,10 +242,6 @@ void Map::setRoomY(int y) {
     if (y >= 0 && y < size) {
         roomY = y;
     }
-}
-
-int Map::getSize() {
-    return size;
 }
 
 int Map::getLen() {

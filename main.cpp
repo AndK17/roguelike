@@ -10,6 +10,8 @@ int len{6};
 int health{100};
 int damage{30};
 
+/// @brief Вывод информационных экранов
+/// @param screen Текст информационного экрана
 void show_screen(std::string screen) {
     clearConsole();
     std::cout << screen;
@@ -17,6 +19,9 @@ void show_screen(std::string screen) {
     char input = _getwch();
 }
 
+/// @brief Вывод и обработка меню
+/// @param menu_points Пункты меню
+/// @return Номер выбранного пункта
 int draw_menu(std::vector<std::string> &menu_points) {
     system("cls");
     int pos = 0;
@@ -46,6 +51,7 @@ int draw_menu(std::vector<std::string> &menu_points) {
     return pos;
 }
 
+/// @brief Запуск игрового цикла
 void start_game() {
     Player player(glb::roomSize / 2, glb::roomSize / 2);
     player.setMaxHealth(health);
@@ -80,6 +86,7 @@ void start_game() {
     if (!is_win && input != 27) show_screen(screens::you_died);
 }
 
+/// @brief Обработка меню выбора символа игрока
 void selectSymbol() {
     std::vector<std::string> select_points{"@", "+", "P", "Back"};
     int pos = draw_menu(select_points);
@@ -98,6 +105,7 @@ void selectSymbol() {
     }
 }
 
+/// @brief Обработка меню выбора сложности
 void selectDifficulty() {
     std::vector<std::string> select_points{"Easy", "Medium", "Hard", "Back"};
     int pos = draw_menu(select_points);
@@ -122,6 +130,7 @@ void selectDifficulty() {
     }
 }
 
+/// @brief Обработка меню настроек
 void settings() {
     std::vector<std::string> settings_points{"Select player symbol", "Select difficulty", "Back"};
     int pos = draw_menu(settings_points);
@@ -139,6 +148,7 @@ void settings() {
     }
 }
 
+/// @brief Обработка главного меню
 void main_menu() {
     std::vector<std::string> menu_points{"Start game", "Settings", "Exit"};
     int pos = draw_menu(menu_points);
