@@ -160,43 +160,43 @@ Demon::Demon(int x, int y)
 Chest::Chest(int bonusHealth, int bonusDamage) : Entity(glb::roomSize / 2, glb::roomSize / 2, glb::symbol["chest"], 1, 0, glb::color["chest"], "chest", bonusHealth, bonusDamage) {}
 
 void fighting(Player &player, Entity &enemy, int stage) {
-    char player_symbol = playerSymbol;
-    char enemy_symbol = glb::symbol[enemy.getName()];
+    char playerTmpSymbol = playerSymbol;
+    char enemyTmpSymbol = glb::symbol[enemy.getName()];
     switch (stage) {
     case 0:
         player.setSymbol(' ');
         player.attack(enemy);
-        enemy.setSymbol(player_symbol);
+        enemy.setSymbol(playerTmpSymbol);
         break;
     case 1:
         if (enemy.getHealth() == 0) {
             enemy.setSymbol(glb::symbol["death"]);
         } else {
-            enemy.setSymbol(enemy_symbol);
+            enemy.setSymbol(enemyTmpSymbol);
         }
-        player.setSymbol(player_symbol);
+        player.setSymbol(playerTmpSymbol);
         break;
     case 2:
         enemy.setSymbol(' ');
         enemy.attack(player);
-        player.setSymbol(enemy_symbol);
+        player.setSymbol(enemyTmpSymbol);
         break;
     case 3:
-        player.setSymbol(player_symbol);
-        enemy.setSymbol(enemy_symbol);
+        player.setSymbol(playerTmpSymbol);
+        enemy.setSymbol(enemyTmpSymbol);
         break;
     }
 }
 
 std::vector<int> chestFighting(Player &player, Entity &chest, int stage) {
-    char player_symbol = playerSymbol;
-    char chest_symbol = glb::symbol[chest.getName()];
+    char playerTmpSymbol = playerSymbol;
+    char chestTmpSymbol = glb::symbol[chest.getName()];
     std::vector<int> bonus;
     switch (stage) {
     case 0:
         player.setSymbol(' ');
         player.attack(chest);
-        chest.setSymbol(player_symbol);
+        chest.setSymbol(playerTmpSymbol);
         break;
     case 1:
         if (chest.getHealth() == 0) {
@@ -208,9 +208,9 @@ std::vector<int> chestFighting(Player &player, Entity &chest, int stage) {
             bonus.push_back(chest.getBonusHealth());
             bonus.push_back(chest.getBonusDamage());
         } else {
-            chest.setSymbol(chest_symbol);
+            chest.setSymbol(chestTmpSymbol);
         }
-        player.setSymbol(player_symbol);
+        player.setSymbol(playerTmpSymbol);
 
         break;
     }

@@ -22,7 +22,7 @@ public:
     Room(bool left = false, bool up = false, bool right = false, bool down = false);
 
     /// @brief Отрисовка стен и дверей на карте
-    void draw_map();
+    void drawMap();
 
     /// @brief Получение карты комнаты
     /// @return Карта комнаты
@@ -30,66 +30,66 @@ public:
 
     /// @brief Получение информации о наличии двери слева
     /// @return Информация о наличии двери слева
-    bool get_left();
+    bool getLeft();
 
     /// @brief Получение информации о наличии двери сверху
     /// @return Информация о наличии двери сверху
-    bool get_up();
+    bool getUp();
 
     /// @brief Получение информации о наличии двери справа
     /// @return Информация о наличии двери справа
-    bool get_right();
+    bool getRight();
 
     /// @brief Получение информации о наличии двери снизу
     /// @return Информация о наличии двери снизу
-    bool get_down();
+    bool getDown();
 
     /// @brief Получение информации является ли конмата финишной
     /// @return Информация является ли конмата финишной
-    bool get_is_finish();
+    bool getIsFinish();
 
     /// @brief Получение порядкового номера комнаты
     /// @return Порядковый номер комнаты
-    int get_room_num();
+    int getRoomNum();
 
     /// @brief Получение инофрмации о дверях в виде массива
     /// @return Массив информации о наличии дверей(порядок: left, up, right, down)
-    std::array<bool, 4> &get_doors();
+    std::array<bool, 4> &getDoors();
 
     /// @brief Получение массива сущностей в комнате
     /// @return Массив сущностей в комнате
-    std::vector<Entity> &get_entities();
+    std::vector<Entity> &getEntities();
 
     /// @brief Изменение информации о левой двери
     /// @param tmp Новое значение 
-    void set_left(bool tmp);
+    void setLeft(bool tmp);
 
     /// @brief Изменение информации о верхней двери
     /// @param tmp Новое значение 
-    void set_up(bool tmp);
+    void setUp(bool tmp);
 
     /// @brief Изменение информации о парвой двери
     /// @param tmp Новое значение  
-    void set_right(bool tmp);
+    void setRight(bool tmp);
 
     /// @brief Изменение информации о нижней двери
     /// @param tmp Новое значение  
-    void set_down(bool tmp);
+    void setDown(bool tmp);
 
     /// @brief Изменение информации о том является ли конмата финишной
     /// @param tmp Новое значение  
-    void set_is_finish(bool tmp);
+    void setIsFinish(bool tmp);
 
     /// @brief Изменение порядкого номера комнаты
     /// @param tmp Новое значение  
-    void set_room_num(int tmp);
+    void setRoomNum(int tmp);
 
     /// @brief Генерация препятствий
-    void generate_obstacles();
+    void generateObstacles();
 
     /// @brief Генерация монстров в комнате
     /// @param len Длина подземелья 
-    void generate_enemies(int len);
+    void generateEnemies(int len);
 
     /// @brief Генерация сундука в комнате
     /// @param len Длина подземелья 
@@ -97,8 +97,8 @@ public:
 
 protected:
     int size = glb::roomSize;
-    int room_num = 0;
-    bool is_finish = false;
+    int roomNum = 0;
+    bool isFinish = false;
     // порядок: left, up, right, down
     std::array<bool, 4> doors;
     std::vector<std::vector<char>> map;

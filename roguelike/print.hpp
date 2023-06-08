@@ -5,9 +5,9 @@ static HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 /// @brief Отрисовка игры
 /// @param map Карта подземелья
-/// @param map_clear Очищенная карта подземелья
+/// @param mapClear Очищенная карта подземелья
 /// @param player Игрок
-void drawGame(Map &map, Map &map_clear, Player &player);
+void drawGame(Map &map, Map &mapClear, Player &player);
 
 /// @brief Отрисовка статистики
 /// @param player Игрок

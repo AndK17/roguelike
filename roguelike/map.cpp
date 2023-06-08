@@ -7,7 +7,7 @@ int random(int upper, int lower) {
     return lower + mt() % (upper - lower + 1);
 }
 
-void Room::draw_map() {
+void Room::drawMap() {
     for (int i = 0; i < size; i++) {
         map[0][i] = glb::symbol["border"];
         map[i][0] = glb::symbol["border"];
@@ -15,94 +15,94 @@ void Room::draw_map() {
         map[i][size - 1] = glb::symbol["border"];
     }
 
-    if (get_left())
+    if (getLeft())
         map[size / 2][0] = glb::emptySymbol;
-    if (get_up())
+    if (getUp())
         map[0][size / 2] = glb::emptySymbol;
-    if (get_right())
+    if (getRight())
         map[size / 2][size - 1] = glb::emptySymbol;
-    if (get_down())
+    if (getDown())
         map[size - 1][size / 2] = glb::emptySymbol;
 }
 
 Room::Room(bool left, bool up, bool right, bool down) {
     map = std::vector<std::vector<char>>(size, std::vector<char>(size, glb::emptySymbol));
-    set_left(left);
-    set_up(up);
-    set_right(right);
-    set_down(down);
+    setLeft(left);
+    setUp(up);
+    setRight(right);
+    setDown(down);
 
-    draw_map();
-    generate_obstacles();
+    drawMap();
+    generateObstacles();
 }
 
 std::vector<std::vector<char>> &Room::getMap() {
     return map;
 }
 
-bool Room::get_left() {
+bool Room::getLeft() {
     return doors[0];
 }
 
-bool Room::get_up() {
+bool Room::getUp() {
     return doors[1];
 }
 
-bool Room::get_right() {
+bool Room::getRight() {
     return doors[2];
 }
 
-bool Room::get_down() {
+bool Room::getDown() {
     return doors[3];
 }
 
-bool Room::get_is_finish() {
-    return is_finish;
+bool Room::getIsFinish() {
+    return isFinish;
 }
 
-int Room::get_room_num() {
-    return room_num;
+int Room::getRoomNum() {
+    return roomNum;
 }
 
-std::array<bool, 4> &Room::get_doors() {
+std::array<bool, 4> &Room::getDoors() {
     return doors;
 }
 
-std::vector<Entity> &Room::get_entities() {
+std::vector<Entity> &Room::getEntities() {
     return entities;
 }
 
-void Room::set_left(bool tmp) {
+void Room::setLeft(bool tmp) {
     doors[0] = tmp;
-    draw_map();
+    drawMap();
 }
 
-void Room::set_up(bool tmp) {
+void Room::setUp(bool tmp) {
     doors[1] = tmp;
-    draw_map();
+    drawMap();
 }
 
-void Room::set_right(bool tmp) {
+void Room::setRight(bool tmp) {
     doors[2] = tmp;
-    draw_map();
+    drawMap();
 }
 
-void Room::set_down(bool tmp) {
+void Room::setDown(bool tmp) {
     doors[3] = tmp;
-    draw_map();
+    drawMap();
 }
 
-void Room::set_is_finish(bool tmp) {
-    is_finish = tmp;
+void Room::setIsFinish(bool tmp) {
+    isFinish = tmp;
 }
 
-void Room::set_room_num(int tmp) {
-    room_num = tmp;
+void Room::setRoomNum(int tmp) {
+    roomNum = tmp;
 }
 
-void Room::generate_obstacles() {
-    int obstacles_count = random(6, 2);
-    for (int i = 0; i < obstacles_count; i++) {
+void Room::generateObstacles() {
+    int obstaclesCount = random(6, 2);
+    for (int i = 0; i < obstaclesCount; i++) {
         switch (random(5)) {
         case 0:
             map[random(size - 3, 2)][random(size - 3, 2)] = glb::symbol["border"];
@@ -157,7 +157,7 @@ void Room::generate_obstacles() {
     }
 }
 
-bool check_enemy_pos(int x, int y, std::vector<Entity> &entities) {
+bool checkEnemyPos(int x, int y, std::vector<Entity> &entities) {
     for (auto entity : entities) {
         if (x == entity.getX() && y == entity.getY())
             return true;
@@ -165,20 +165,20 @@ bool check_enemy_pos(int x, int y, std::vector<Entity> &entities) {
     return false;
 }
 
-void Room::generate_enemies(int len) {
-    int enemies_count = random(5, 3);
+void Room::generateEnemies(int len) {
+    int enemiesCount = random(5, 3);
     int section = len / 3;
 
-    for (int i = 0; i < enemies_count; i++) {
+    for (int i = 0; i < enemiesCount; i++) {
         int typeEnemy = random(1);
         int x = random(glb::roomSize - 2, 1);
         int y = random(glb::roomSize - 2, 1);
-        while (map[x][y] != glb::emptySymbol || (x == size / 2 && y == size / 2) || check_enemy_pos(x, y, entities)) {
+        while (map[x][y] != glb::emptySymbol || (x == size / 2 && y == size / 2) || checkEnemyPos(x, y, entities)) {
             x = random(glb::roomSize - 2, 1);
             y = random(glb::roomSize - 2, 1);
         }
 
-        switch ((room_num - 1) / section) {
+        switch ((roomNum - 1) / section) {
         case 0:
             if (typeEnemy == 0) {
                 entities.push_back(Wolf(x, y));
@@ -260,51 +260,51 @@ std::vector<std::vector<Room>> &Map::getMap() {
     return map;
 }
 
-int change_random_door(Room &room) {
+int changeRandomDoor(Room &room) {
     int c = 4;
-    if (room.get_left())
+    if (room.getLeft())
         c -= 1;
-    if (room.get_up())
+    if (room.getUp())
         c -= 1;
-    if (room.get_right())
+    if (room.getRight())
         c -= 1;
-    if (room.get_down())
+    if (room.getDown())
         c -= 1;
 
     int n = random(c - 1);
 
-    if (!room.get_left()) {
+    if (!room.getLeft()) {
 
         if (n == 0) {
 
-            room.set_left(true);
+            room.setLeft(true);
             return 0;
         } else
             n -= 1;
     }
 
-    if (!room.get_up()) {
+    if (!room.getUp()) {
 
         if (n == 0) {
-            room.set_up(true);
+            room.setUp(true);
             return 1;
         } else
             n -= 1;
     }
 
-    if (!room.get_right()) {
+    if (!room.getRight()) {
 
         if (n == 0) {
-            room.set_right(true);
+            room.setRight(true);
             return 2;
         } else
             n -= 1;
     }
 
-    if (!room.get_down()) {
+    if (!room.getDown()) {
 
         if (n == 0) {
-            room.set_down(true);
+            room.setDown(true);
             return 3;
         } else
             n -= 1;
@@ -318,19 +318,19 @@ Map::Map(int len) {
     int y = size / 2;
 
     Room room(false);
-    int next_pos;
+    int nextPos;
 
     for (int i{0}; i < len; i++) {
-        room.set_room_num(i + 1);
-        room.generate_enemies(len);
+        room.setRoomNum(i + 1);
+        room.generateEnemies(len);
         if (i == len - 1)
-            room.set_is_finish(true);
+            room.setIsFinish(true);
         if (i != len - 1)
-            next_pos = change_random_door(room);
+            nextPos = changeRandomDoor(room);
 
         map[x][y] = room;
 
-        switch (next_pos) {
+        switch (nextPos) {
         case 0:
             y -= 1;
             room = Room(false, false, true);

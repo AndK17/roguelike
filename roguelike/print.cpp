@@ -17,10 +17,10 @@ COORD getInfoCOORD(int y) {
     return infoCOORD;
 }
 
-void drawGame(Map &map, Map &map_clear, Player &player) {
-    std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].get_entities();
+void drawGame(Map &map, Map &mapClear, Player &player) {
+    std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].getEntities();
     std::vector<std::vector<char>> roomMap =
-        map_clear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
+        mapClear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
     for (auto &entity : roomEntities) {
         roomMap[entity.getX()][entity.getY()] = entity.getSymbol();
