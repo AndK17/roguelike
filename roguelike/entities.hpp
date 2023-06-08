@@ -1,8 +1,10 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 #include "config.hpp"
+
 
 /// @brief Смена символа игрока
 /// @param s Новый символ
@@ -85,7 +87,7 @@ public:
 
     /// @brief Получение бонусного здоровья
     /// @return Бонусное здоровье
-    int getBonusHealth();
+    int getBonusHealth() const;
 
     /// @brief Установка бонусного здоровья
     /// @param hp Новое бонусное здороье
@@ -93,7 +95,7 @@ public:
 
     /// @brief Получение бонусного урона
     /// @return Бонусный урон
-    int getBonusDamage();
+    int getBonusDamage() const;
 
     /// @brief Установка бонусного урона
     /// @param dmg Новый бонусный урон
@@ -126,7 +128,7 @@ public:
 
     /// @brief Получение максимального здоровья
     /// @return Максимальное здоровье
-    int getMaxHealth();
+    int getMaxHealth() const;
 
     /// @brief Установка максимального здоровья
     /// @param tmp Новое максимальное здоровья

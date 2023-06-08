@@ -8,8 +8,9 @@ void changePlayerSymbol(char s) {
 
 
 Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
-               std::string name, int bonusHealth, int bonusDamage)
-    : x{x}, y{y} {
+               std::string name, int bonusHealth, int bonusDamage) {
+    setX(x);
+    setY(y);
     setSymbol(symbol);
     setHealth(health);
     setDamage(damage);
@@ -22,62 +23,65 @@ Entity::Entity(int x, int y, char symbol, int health, int damage, int color,
 Entity::~Entity() {}
 
 int Entity::getX() const { return x; }
-void Entity::setX(int x) { this->x = x; }
+
+void Entity::setX(int x) {
+    if (x < 0 || x >= glb::roomSize) throw std::invalid_argument("invalid x value");
+    this->x = x;
+}
+
 int Entity::getY() const { return y; }
-void Entity::setY(int y) { this->y = y; }
+
+void Entity::setY(int y) {
+    if (y < 0 || y >= glb::roomSize) throw std::invalid_argument("invalid y value");
+    this->y = y;
+}
 
 char Entity::getSymbol() const { return symbol; }
+
 void Entity::setSymbol(char c) { symbol = c; }
 
 int Entity::getHealth() const { return health; }
+
 void Entity::setHealth(int health) {
-    if (health <= 0) {
-        this->health = 0;
-    } else {
-        this->health = health;
-    }
+    if (health <= 0) this->health = 0;
+    else this->health = health;
 }
 
 int Entity::getDamage() const { return damage; }
+
 void Entity::setDamage(int damage) {
-    if (damage <= 0) {
-        this->damage = 0;
-    } else {
-        this->damage = damage;
-    }
+    if (damage <= 0) this->damage = 0;
+    else this->damage = damage;
 }
 
 int Entity::getColor() const { return color; }
-void Entity::setColor(int color) { this->color = color; }
+
+void Entity::setColor(int color) {
+    if (color < 0 || color >= 16) throw std::invalid_argument("invalid color value");
+    this->color = color;
+}
 
 std::string Entity::getName() const { return name; }
+
 void Entity::setName(std::string name) { this->name = name; }
 
-int Entity::getBonusHealth() {
-    return bonusHealth;
-}
+int Entity::getBonusHealth() const { return bonusHealth; }
 
 void Entity::setBonusHealth(int hp) {
-    if (hp > 0)
-        bonusHealth = hp;
-    else
-        bonusHealth = 0;
+    if (hp < 0) bonusHealth = 0;
+    else this->bonusHealth = hp;
 }
 
-int Entity::getBonusDamage() {
-    return bonusDamage;
-}
+int Entity::getBonusDamage() const { return bonusDamage; }
 
 void Entity::setBonusDamage(int dmg) {
-    if (dmg > 0)
-        bonusDamage = dmg;
-    else
-        bonusDamage = 0;
+    if (dmg < 0) bonusDamage = 0;
+    else this->bonusDamage = dmg;
 }
 
 void Entity::move(int dx, int dy) {
-    x += dx;
-    y += dy;
+    setX(getX() + dx);
+    setY(getY() + dy);
 }
 
 void Entity::attack(Entity &other) {
@@ -85,16 +89,18 @@ void Entity::attack(Entity &other) {
 }
 
 Player::Player(int x, int y)
-    : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player", 0, 0) {
+        : Entity(x, y, playerSymbol, 100, 30, glb::color["player"], "player", 0, 0) {
     setMaxHealth(100);
 }
 
-int Player::getMaxHealth() {
+int Player::getMaxHealth() const {
     return maxHealth;
 }
 
 void Player::setMaxHealth(int tmp) {
-    maxHealth = tmp;
+    if (tmp <= 0) this->maxHealth = 0;
+    else this->maxHealth = tmp;
+    if (getHealth() > maxHealth) setHealth(maxHealth);
 }
 
 void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
@@ -107,13 +113,13 @@ void Player::move(int dx, int dy, std::vector<std::vector<char>> &map) {
 void Player::attack(Entity &other) {
     other.setHealth(other.getHealth() - getDamage());
     if (other.getHealth() <= 0) {
-        other.setSymbol('X');
+        other.setSymbol(glb::symbol["death"]);
     }
 }
 
 Entity *Player::collisionWithEnemy(int dx, int dy,
                                    std::vector<Entity> &enemies) {
-    for (auto &enemy : enemies) {
+    for (auto &enemy: enemies) {
         if (enemy.getX() == getX() + dx && enemy.getY() == getY() + dy) {
             return &enemy;
         }
@@ -123,7 +129,7 @@ Entity *Player::collisionWithEnemy(int dx, int dy,
 
 std::vector<Entity> Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
     std::vector<Entity> neighbourEnenmies{};
-    for (auto &enemy : enemies) {
+    for (auto &enemy: enemies) {
         if (((enemy.getX() == getX() + 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() - 1 && enemy.getY() == getY()) ||
              (enemy.getX() == getX() && enemy.getY() == getY() + 1) ||
@@ -137,88 +143,91 @@ std::vector<Entity> Player::neighbourWithEnemy(std::vector<Entity> &enemies) {
 
 Enemy::Enemy(int x, int y, char symbol, int health, int damage, int color,
              std::string name)
-    : Entity(x, y, symbol, health, damage, color, name, 0, 0) {}
+        : Entity(x, y, symbol, health, damage, color, name, 0, 0) {}
 
 Wolf::Wolf(int x, int y)
-    : Enemy(x, y, glb::symbol["wolf"], 40, 15, glb::color["wolf"], "wolf") {}
+        : Enemy(x, y, glb::symbol["wolf"], 40, 15, glb::color["wolf"], "wolf") {}
 
 Slime::Slime(int x, int y)
-    : Enemy(x, y, glb::symbol["slime"], 50, 20, glb::color["slime"], "slime") {}
+        : Enemy(x, y, glb::symbol["slime"], 50, 20, glb::color["slime"], "slime") {}
 
 Goblin::Goblin(int x, int y)
-    : Enemy(x, y, glb::symbol["goblin"], 90, 35, glb::color["goblin"], "goblin") {}
+        : Enemy(x, y, glb::symbol["goblin"], 90, 35, glb::color["goblin"], "goblin") {}
 
 Orc::Orc(int x, int y)
-    : Enemy(x, y, glb::symbol["orc"], 110, 40, glb::color["orc"], "orc") {}
+        : Enemy(x, y, glb::symbol["orc"], 110, 40, glb::color["orc"], "orc") {}
 
 Vampire::Vampire(int x, int y)
-    : Enemy(x, y, glb::symbol["vampire"], 160, 50, glb::color["vampire"], "vampire") {}
+        : Enemy(x, y, glb::symbol["vampire"], 160, 50, glb::color["vampire"], "vampire") {}
 
 Demon::Demon(int x, int y)
-    : Enemy(x, y, glb::symbol["demon"], 185, 60, glb::color["demon"], "demon") {}
+        : Enemy(x, y, glb::symbol["demon"], 185, 60, glb::color["demon"], "demon") {}
 
-Chest::Chest(int bonusHealth, int bonusDamage) : Entity(glb::roomSize / 2, glb::roomSize / 2, glb::symbol["chest"], 1, 0, glb::color["chest"], "chest", bonusHealth, bonusDamage) {}
+Chest::Chest(int bonusHealth, int bonusDamage) : Entity(glb::roomSize / 2, glb::roomSize / 2, glb::symbol["chest"], 1,
+                                                        0, glb::color["chest"], "chest", bonusHealth, bonusDamage) {}
 
 void fighting(Player &player, Entity &enemy, int stage) {
+    if (stage < 0 || stage >= 4) throw std::invalid_argument("invalid stage value");
     char playerTmpSymbol = playerSymbol;
     char enemyTmpSymbol = glb::symbol[enemy.getName()];
     switch (stage) {
-    case 0:
-        player.setSymbol(' ');
-        player.attack(enemy);
-        enemy.setSymbol(playerTmpSymbol);
-        break;
-    case 1:
-        if (enemy.getHealth() == 0) {
-            enemy.setSymbol(glb::symbol["death"]);
-        } else {
+        case 0:
+            player.setSymbol(' ');
+            player.attack(enemy);
+            enemy.setSymbol(playerTmpSymbol);
+            break;
+        case 1:
+            if (enemy.getHealth() == 0) {
+                enemy.setSymbol(glb::symbol["death"]);
+            } else {
+                enemy.setSymbol(enemyTmpSymbol);
+            }
+            player.setSymbol(playerTmpSymbol);
+            break;
+        case 2:
+            enemy.setSymbol(' ');
+            enemy.attack(player);
+            player.setSymbol(enemyTmpSymbol);
+            break;
+        case 3:
+            player.setSymbol(playerTmpSymbol);
             enemy.setSymbol(enemyTmpSymbol);
-        }
-        player.setSymbol(playerTmpSymbol);
-        break;
-    case 2:
-        enemy.setSymbol(' ');
-        enemy.attack(player);
-        player.setSymbol(enemyTmpSymbol);
-        break;
-    case 3:
-        player.setSymbol(playerTmpSymbol);
-        enemy.setSymbol(enemyTmpSymbol);
-        break;
+            break;
     }
 }
 
 std::vector<int> chestFighting(Player &player, Entity &chest, int stage) {
+    if (stage < 0 || stage >= 4) throw std::invalid_argument("invalid stage value");
     char playerTmpSymbol = playerSymbol;
     char chestTmpSymbol = glb::symbol[chest.getName()];
     std::vector<int> bonus;
     switch (stage) {
-    case 0:
-        player.setSymbol(' ');
-        player.attack(chest);
-        chest.setSymbol(playerTmpSymbol);
-        break;
-    case 1:
-        if (chest.getHealth() == 0) {
-            chest.setSymbol(glb::symbol["death"]);
-            player.setMaxHealth(player.getMaxHealth() + chest.getBonusHealth());
-            player.setHealth(player.getMaxHealth());
-            player.setDamage(player.getDamage() + chest.getBonusDamage());
+        case 0:
+            player.setSymbol(' ');
+            player.attack(chest);
+            chest.setSymbol(playerTmpSymbol);
+            break;
+        case 1:
+            if (chest.getHealth() == 0) {
+                chest.setSymbol(glb::symbol["death"]);
+                player.setMaxHealth(player.getMaxHealth() + chest.getBonusHealth());
+                player.setHealth(player.getMaxHealth());
+                player.setDamage(player.getDamage() + chest.getBonusDamage());
 
-            bonus.push_back(chest.getBonusHealth());
-            bonus.push_back(chest.getBonusDamage());
-        } else {
-            chest.setSymbol(chestTmpSymbol);
-        }
-        player.setSymbol(playerTmpSymbol);
+                bonus.push_back(chest.getBonusHealth());
+                bonus.push_back(chest.getBonusDamage());
+            } else {
+                chest.setSymbol(chestTmpSymbol);
+            }
+            player.setSymbol(playerTmpSymbol);
 
-        break;
+            break;
     }
     return bonus;
 }
 
 bool isRoomClear(std::vector<Entity> &enemies) {
-    for (auto &enemy : enemies) {
+    for (auto &enemy: enemies) {
         if (enemy.getName() == "chest" || enemy.getSymbol() != glb::symbol["death"]) {
             return false;
         }
