@@ -97,7 +97,8 @@ void Room::setIsFinish(bool tmp) {
 }
 
 void Room::setRoomNum(int tmp) {
-    roomNum = tmp;
+    if(tmp < 0) throw std::invalid_argument("Room num must be not negative");
+    else roomNum = tmp;
 }
 
 void Room::generateObstacles() {
@@ -166,6 +167,7 @@ bool checkEnemyPos(int x, int y, std::vector<Entity> &entities) {
 }
 
 void Room::generateEnemies(int len) {
+    if (len <= 0) throw std::invalid_argument("len must be positive");
     int enemiesCount = random(5, 3);
     int section = len / 3;
 
@@ -205,7 +207,7 @@ void Room::generateEnemies(int len) {
     }
 }
 
-void Room::generateChest(int len) {
+void Room::generateChest() {
     switch (random(2)) {
     case 0:
         entities.push_back(Chest(20, 10));
@@ -225,22 +227,29 @@ void Map::setNullMap() {
 
 void Map::setLen(int len) {
     if (len > 0) {
-        len = len;
+        this->len = len;
         size = len * 2 - 1;
-        roomX = roomY = size / 2;
+        setRoomX(size / 2);
+        setRoomY(size / 2);
         Map::setNullMap();
+    }else{
+        throw std::invalid_argument("len must be positive");
     }
 }
 
 void Map::setRoomX(int x) {
     if (x >= 0 && x < size) {
         roomX = x;
+    }else{
+        throw std::invalid_argument("X must be > 0 and < roomSize");
     }
 }
 
 void Map::setRoomY(int y) {
     if (y >= 0 && y < size) {
         roomY = y;
+    }else{
+        throw std::invalid_argument("Y must be > 0 and < roomSize");
     }
 }
 

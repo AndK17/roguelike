@@ -25,7 +25,7 @@ bool playGame(Map &map,
     std::vector<int> bonus;
 
     if (isRoomClear(entities)) {
-        room.generateChest(map.getLen());
+        room.generateChest();
     }
 
     if (player.getY() + dy == -1) {

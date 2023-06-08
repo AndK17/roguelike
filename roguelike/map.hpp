@@ -92,8 +92,7 @@ public:
     void generateEnemies(int len);
 
     /// @brief Генерация сундука в комнате
-    /// @param len Длина подземелья 
-    void generateChest(int len);
+    void generateChest();
 
 protected:
     int size = glb::roomSize;
