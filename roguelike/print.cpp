@@ -8,7 +8,7 @@ static COORD topLeftCorner = makeCoord(0, 0);
 static COORD bottomLeftCorner = makeCoord(0, glb::roomSize + 1);
 
 COORD makeCoord(int x, int y) {
-    COORD coord = {(SHORT)x, (SHORT)y};
+    COORD coord = {(SHORT) x, (SHORT) y};
     return coord;
 }
 
@@ -20,17 +20,17 @@ COORD getInfoCOORD(int y) {
 void drawGame(Map &map, Map &mapClear, Player &player) {
     std::vector<Entity> &roomEntities = map.getMap()[map.getRoomX()][map.getRoomY()].getEntities();
     std::vector<std::vector<char>> roomMap =
-        mapClear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
+            mapClear.getMap()[map.getRoomX()][map.getRoomY()].getMap();
 
-    for (auto &entity : roomEntities) {
+    for (auto &entity: roomEntities) {
         roomMap[entity.getX()][entity.getY()] = entity.getSymbol();
     }
     roomMap[player.getX()][player.getY()] = player.getSymbol();
 
     clearConsole();
 
-    for (auto row : roomMap) {
-        for (auto c : row) {
+    for (auto row: roomMap) {
+        for (auto c: row) {
             if (c == playerSymbol) {
                 SetConsoleTextAttribute(hStdOut, glb::color["player"]);
             } else {

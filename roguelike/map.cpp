@@ -97,7 +97,7 @@ void Room::setIsFinish(bool tmp) {
 }
 
 void Room::setRoomNum(int tmp) {
-    if(tmp < 0) throw std::invalid_argument("Room num must be not negative");
+    if (tmp < 0) throw std::invalid_argument("Room num must be not negative");
     else roomNum = tmp;
 }
 
@@ -105,61 +105,66 @@ void Room::generateObstacles() {
     int obstaclesCount = random(6, 2);
     for (int i = 0; i < obstaclesCount; i++) {
         switch (random(5)) {
-        case 0:
-            map[random(size - 3, 2)][random(size - 3, 2)] = glb::symbol["border"];
-            break;
-        case 1: {
-            int pos = random(size - 5, 2);
-            int y = random(size - 3, 2);
-            for (int j = 0; j < 3; j++) {
-                map[y][pos + j] = glb::symbol["border"];
+            case 0:
+                map[random(size - 3, 2)][random(size - 3, 2)] = glb::symbol["border"];
+                break;
+            case 1: {
+                int pos = random(size - 5, 2);
+                int y = random(size - 3, 2);
+                for (int j = 0; j < 3; j++) {
+                    map[y][pos + j] = glb::symbol["border"];
+                }
             }
-        } break;
-        case 2: {
-            int pos = random(size - 5, 2);
-            int x = random(size - 3, 2);
-            for (int j = 0; j < 3; j++) {
-                map[pos + j][x] = glb::symbol["border"];
+                break;
+            case 2: {
+                int pos = random(size - 5, 2);
+                int x = random(size - 3, 2);
+                for (int j = 0; j < 3; j++) {
+                    map[pos + j][x] = glb::symbol["border"];
+                }
             }
-        } break;
-        case 3: {
-            int pos = random(size - 5, 2);
-            int x = random(size - 5, 2);
-            for (int j = 0; j < 3; j++) {
-                map[pos + j][x] = glb::symbol["border"];
+                break;
+            case 3: {
+                int pos = random(size - 5, 2);
+                int x = random(size - 5, 2);
+                for (int j = 0; j < 3; j++) {
+                    map[pos + j][x] = glb::symbol["border"];
+                }
+                pos = pos + 2;
+                for (int j = 0; j < 3; j++) {
+                    map[pos][x + j] = glb::symbol["border"];
+                }
             }
-            pos = pos + 2;
-            for (int j = 0; j < 3; j++) {
-                map[pos][x + j] = glb::symbol["border"];
+                break;
+            case 4: {
+                int pos = random(size - 5, 2);
+                int x = random(size - 5, 2);
+                for (int j = 0; j < 3; j++) {
+                    map[x][pos + j] = glb::symbol["border"];
+                }
+                pos = pos + 2;
+                for (int j = 0; j < 3; j++) {
+                    map[x + j][pos] = glb::symbol["border"];
+                }
             }
-        } break;
-        case 4: {
-            int pos = random(size - 5, 2);
-            int x = random(size - 5, 2);
-            for (int j = 0; j < 3; j++) {
-                map[x][pos + j] = glb::symbol["border"];
+                break;
+            case 5: {
+                int pos = random(size - 5, 2);
+                int x = random(size - 5, 2);
+                for (int j = 0; j < 3; j++) {
+                    map[x][pos + j] = glb::symbol["border"];
+                }
+                for (int j = 0; j < 3; j++) {
+                    map[x + j][pos] = glb::symbol["border"];
+                }
             }
-            pos = pos + 2;
-            for (int j = 0; j < 3; j++) {
-                map[x + j][pos] = glb::symbol["border"];
-            }
-        } break;
-        case 5: {
-            int pos = random(size - 5, 2);
-            int x = random(size - 5, 2);
-            for (int j = 0; j < 3; j++) {
-                map[x][pos + j] = glb::symbol["border"];
-            }
-            for (int j = 0; j < 3; j++) {
-                map[x + j][pos] = glb::symbol["border"];
-            }
-        } break;
+                break;
         }
     }
 }
 
 bool checkEnemyPos(int x, int y, std::vector<Entity> &entities) {
-    for (auto entity : entities) {
+    for (auto entity: entities) {
         if (x == entity.getX() && y == entity.getY())
             return true;
     }
@@ -181,43 +186,43 @@ void Room::generateEnemies(int len) {
         }
 
         switch ((roomNum - 1) / section) {
-        case 0:
-            if (typeEnemy == 0) {
-                entities.push_back(Wolf(x, y));
-            } else if (typeEnemy == 1) {
-                entities.push_back(Slime(x, y));
-            }
-            break;
+            case 0:
+                if (typeEnemy == 0) {
+                    entities.push_back(Wolf(x, y));
+                } else if (typeEnemy == 1) {
+                    entities.push_back(Slime(x, y));
+                }
+                break;
 
-        case 1:
-            if (typeEnemy == 0) {
-                entities.push_back(Goblin(x, y));
-            } else if (typeEnemy == 1) {
-                entities.push_back(Orc(x, y));
-            }
-            break;
-        case 2:
-            if (typeEnemy == 0) {
-                entities.push_back(Vampire(x, y));
-            } else if (typeEnemy == 1) {
-                entities.push_back(Demon(x, y));
-            }
-            break;
+            case 1:
+                if (typeEnemy == 0) {
+                    entities.push_back(Goblin(x, y));
+                } else if (typeEnemy == 1) {
+                    entities.push_back(Orc(x, y));
+                }
+                break;
+            case 2:
+                if (typeEnemy == 0) {
+                    entities.push_back(Vampire(x, y));
+                } else if (typeEnemy == 1) {
+                    entities.push_back(Demon(x, y));
+                }
+                break;
         }
     }
 }
 
 void Room::generateChest() {
     switch (random(2)) {
-    case 0:
-        entities.push_back(Chest(20, 10));
-        break;
-    case 1:
-        entities.push_back(Chest(35, 15));
-        break;
-    case 2:
-        entities.push_back(Chest(50, 20));
-        break;
+        case 0:
+            entities.push_back(Chest(20, 10));
+            break;
+        case 1:
+            entities.push_back(Chest(35, 15));
+            break;
+        case 2:
+            entities.push_back(Chest(50, 20));
+            break;
     }
 }
 
@@ -232,7 +237,7 @@ void Map::setLen(int len) {
         setRoomX(size / 2);
         setRoomY(size / 2);
         Map::setNullMap();
-    }else{
+    } else {
         throw std::invalid_argument("len must be positive");
     }
 }
@@ -240,7 +245,7 @@ void Map::setLen(int len) {
 void Map::setRoomX(int x) {
     if (x >= 0 && x < size) {
         roomX = x;
-    }else{
+    } else {
         throw std::invalid_argument("X must be > 0 and < roomSize");
     }
 }
@@ -248,7 +253,7 @@ void Map::setRoomX(int x) {
 void Map::setRoomY(int y) {
     if (y >= 0 && y < size) {
         roomY = y;
-    }else{
+    } else {
         throw std::invalid_argument("Y must be > 0 and < roomSize");
     }
 }
@@ -340,22 +345,22 @@ Map::Map(int len) {
         map[x][y] = room;
 
         switch (nextPos) {
-        case 0:
-            y -= 1;
-            room = Room(false, false, true);
-            break;
-        case 1:
-            x -= 1;
-            room = Room(false, false, false, true);
-            break;
-        case 2:
-            y += 1;
-            room = Room(true);
-            break;
-        case 3:
-            x += 1;
-            room = Room(false, true);
-            break;
+            case 0:
+                y -= 1;
+                room = Room(false, false, true);
+                break;
+            case 1:
+                x -= 1;
+                room = Room(false, false, false, true);
+                break;
+            case 2:
+                y += 1;
+                room = Room(true);
+                break;
+            case 3:
+                x += 1;
+                room = Room(false, true);
+                break;
         }
     }
 }

@@ -74,7 +74,7 @@ void startGame() {
             if (isWin) {
                 showScreen(screens::you_win);
                 break;
-            } 
+            }
         } else if (input == 27) {
             break;
         } else if (input == 'p') {
@@ -91,17 +91,17 @@ void selectSymbol() {
     std::vector<std::string> selectPoints{"@", "+", "P", "Back"};
     int pos = drawMenu(selectPoints);
     switch (pos) {
-    case 0:
-        changePlayerSymbol('@');
-        break;
-    case 1:
-        changePlayerSymbol('+');
-        break;
-    case 2:
-        changePlayerSymbol('P');
-        break;
-    case 3:
-        break;
+        case 0:
+            changePlayerSymbol('@');
+            break;
+        case 1:
+            changePlayerSymbol('+');
+            break;
+        case 2:
+            changePlayerSymbol('P');
+            break;
+        case 3:
+            break;
     }
 }
 
@@ -110,23 +110,23 @@ void selectDifficulty() {
     std::vector<std::string> selectPoints{"Easy", "Medium", "Hard", "Back"};
     int pos = drawMenu(selectPoints);
     switch (pos) {
-    case 0:
-        len = 9;
-        health = 80;
-        damage = 25;
-        break;
-    case 1:
-        len = 6;
-        health = 100;
-        damage = 30;
-        break;
-    case 2:
-        len = 3;
-        health = 150;
-        damage = 60;
-        break;
-    case 3:
-        break;
+        case 0:
+            len = 9;
+            health = 80;
+            damage = 25;
+            break;
+        case 1:
+            len = 6;
+            health = 100;
+            damage = 30;
+            break;
+        case 2:
+            len = 3;
+            health = 150;
+            damage = 60;
+            break;
+        case 3:
+            break;
     }
 }
 
@@ -135,16 +135,16 @@ void settings() {
     std::vector<std::string> settingsPoints{"Select player symbol", "Select difficulty", "Back"};
     int pos = drawMenu(settingsPoints);
     switch (pos) {
-    case 0:
-        selectSymbol();
-        settings();
-        break;
-    case 1:
-        selectDifficulty();
-        settings();
-        break;
-    case 2:
-        break;
+        case 0:
+            selectSymbol();
+            settings();
+            break;
+        case 1:
+            selectDifficulty();
+            settings();
+            break;
+        case 2:
+            break;
     }
 }
 
@@ -154,18 +154,18 @@ void mainMenu() {
     int pos = drawMenu(menuPoints);
 
     switch (pos) {
-    case 0:
-        startGame();
-        mainMenu();
-        break;
-    case 1:
-        settings();
-        mainMenu();
-        break;
-    case 2:
-        std::cout << std::endl
-                  << "   Goodbye!" << std::endl;
-        break;
+        case 0:
+            startGame();
+            mainMenu();
+            break;
+        case 1:
+            settings();
+            mainMenu();
+            break;
+        case 2:
+            std::cout << std::endl
+                      << "   Goodbye!" << std::endl;
+            break;
     }
 }
 

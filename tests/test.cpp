@@ -80,6 +80,7 @@ TEST_CASE("isRoomClear test") {
     CHECK(isRoomClear(ev) == false);
 }
 
+// map
 TEST_CASE("Room test") {
     Room room{Room()};
 
@@ -96,10 +97,8 @@ TEST_CASE("Room test") {
 
     room.generateObstacles();
     bool wasBorder{false};
-    for(int X = 1; X < room.getMap().size() - 1; X++)
-    {
-        for(int Y = 1; Y < room.getMap()[0].size() - 1; Y++)
-        {
+    for (int X = 1; X < room.getMap().size() - 1; X++) {
+        for (int Y = 1; Y < room.getMap()[0].size() - 1; Y++) {
             if (room.getMap()[X][Y] == glb::symbol["border"]) {
                 wasBorder = true;
                 break;
@@ -111,14 +110,13 @@ TEST_CASE("Room test") {
     room.generateChest();
     bool wasChest = false;
     for (auto i: room.getEntities()) {
-        if (i.getName() == "chest")
-        {
+        if (i.getName() == "chest") {
             wasChest = true;
             break;
         }
     }
     CHECK(wasChest == true);
-    
+
     room.setLeft(true);
     CHECK(room.getLeft() == true);
 
@@ -155,19 +153,17 @@ TEST_CASE("Map test") {
     map.setRoomX(4);
     CHECK(map.getRoomX() == 4);
     CHECK_THROWS_AS(map.setRoomX(-4), std::invalid_argument);
-    CHECK_THROWS_AS(map.setRoomX(map.getLen()*10), std::invalid_argument);
+    CHECK_THROWS_AS(map.setRoomX(map.getLen() * 10), std::invalid_argument);
 
     map.setRoomY(2);
     CHECK(map.getRoomY() == 2);
     CHECK_THROWS_AS(map.setRoomY(-4), std::invalid_argument);
-    CHECK_THROWS_AS(map.setRoomY(map.getLen()*10), std::invalid_argument);
+    CHECK_THROWS_AS(map.setRoomY(map.getLen() * 10), std::invalid_argument);
 
     map.setNullMap();
     std::array<bool, 4> noDoors{false, false, false, false};
-    for(int X = 0; X < map.getMap().size(); X++)
-    {
-        for(int Y = 0; Y < map.getMap()[0].size(); Y++)
-        {
+    for (int X = 0; X < map.getMap().size(); X++) {
+        for (int Y = 0; Y < map.getMap()[0].size(); Y++) {
             CHECK(map.getMap()[X][Y].getDoors() == noDoors);
         }
     }
