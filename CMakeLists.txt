@@ -7,3 +7,6 @@ add_library(map STATIC roguelike/map.cpp)
 add_library(print STATIC roguelike/print.cpp)
 add_library(control STATIC roguelike/control.cpp)
 target_link_libraries(roguelike map entities print control)
+
+add_executable(test tests/test.cpp)
+target_link_libraries(test map entities print control)

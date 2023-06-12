@@ -2,7 +2,7 @@
 #include <iostream>
 
 bool playGame(Map &map,
-              Map &map_clear,
+              Map &mapClear,
               Player &player,
               char input) {
 
@@ -17,46 +17,46 @@ bool playGame(Map &map,
         dy = 1;
 
     Room &room = map.getMap()[map.getRoomX()][map.getRoomY()];
-    int roomNum = room.get_room_num();
+    int roomNum = room.getRoomNum();
     std::vector<std::vector<char>> &roomMap = room.getMap();
-    std::vector<Entity> &entities = room.get_entities();
+    std::vector<Entity> &entities = room.getEntities();
     std::vector<Entity> neighbourEnemies;
 
     std::vector<int> bonus;
 
     if (isRoomClear(entities)) {
-        room.generateChest(map.getLen());
+        room.generateChest();
     }
 
     if (player.getY() + dy == -1) {
         map.setRoomY(map.getRoomY() - 1);
         player.setY(glb::roomSize - 1);
-        drawGame(map, map_clear, player);
+        drawGame(map, mapClear, player);
         neighbourEnemies = player.neighbourWithEnemy(entities);
         drawStatistics(player, neighbourEnemies, roomNum, bonus);
     } else if (player.getX() + dx == -1) {
         map.setRoomX(map.getRoomX() - 1);
         player.setX(glb::roomSize - 1);
-        drawGame(map, map_clear, player);
+        drawGame(map, mapClear, player);
         neighbourEnemies = player.neighbourWithEnemy(entities);
         drawStatistics(player, neighbourEnemies, roomNum, bonus);
     } else if (player.getY() + dy == glb::roomSize) {
         map.setRoomY(map.getRoomY() + 1);
         player.setY(0);
-        drawGame(map, map_clear, player);
+        drawGame(map, mapClear, player);
         neighbourEnemies = player.neighbourWithEnemy(entities);
         drawStatistics(player, neighbourEnemies, roomNum, bonus);
     } else if (player.getX() + dx == glb::roomSize) {
         map.setRoomX(map.getRoomX() + 1);
         player.setX(0);
-        drawGame(map, map_clear, player);
+        drawGame(map, mapClear, player);
         neighbourEnemies = player.neighbourWithEnemy(entities);
         drawStatistics(player, neighbourEnemies, roomNum, bonus);
     } else {
         Entity *enemy = player.collisionWithEnemy(dx, dy, entities);
         if (!enemy || enemy->getSymbol() == glb::symbol["death"]) {
             player.move(dx, dy, roomMap);
-            drawGame(map, map_clear, player);
+            drawGame(map, mapClear, player);
             neighbourEnemies = player.neighbourWithEnemy(entities);
             drawStatistics(player, neighbourEnemies, roomNum, bonus);
         } else {
@@ -67,13 +67,13 @@ bool playGame(Map &map,
 
                 if (enemy->getName() == "chest") {
                     bonus = chestFighting(player, *enemy, i);
-                    if (room.get_is_finish()) {
+                    if (room.getIsFinish()) {
                         return true;
                     }
                 } else {
                     fighting(player, *enemy, i);
                 }
-                drawGame(map, map_clear, player);
+                drawGame(map, mapClear, player);
                 neighbourEnemies = player.neighbourWithEnemy(entities);
                 drawStatistics(player, neighbourEnemies, roomNum, bonus);
                 if (i < 3) {
