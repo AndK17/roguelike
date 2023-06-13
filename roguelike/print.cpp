@@ -51,7 +51,7 @@ void drawGame(Map &map, Map &mapClear, Player &player) {
 void drawStatistics(Player &player, std::vector<Entity> &entities, int roomNum, std::vector<int> bonus) {
     SetConsoleTextAttribute(hStdOut, glb::color_white);
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(0));
-    std::cout << "room " << roomNum;
+    std::cout << "Room " << roomNum;
 
     SetConsoleCursorPosition(hStdOut, getInfoCOORD(1));
     int healthParts{0};

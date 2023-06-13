@@ -100,12 +100,12 @@ $(document).ready(function(){initNavTree('control_8hpp.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ac87bdad0d5404ab20a6d2dbe5292ec87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="control_8hpp.html#ac87bdad0d5404ab20a6d2dbe5292ec87">updateGame</a> (<a class="el" href="class_map.html">Map</a> &amp;map, <a class="el" href="class_map.html">Map</a> &amp;mapClear, <a class="el" href="class_player.html">Player</a> &amp;player, std::vector&lt; <a class="el" href="class_entity.html">Entity</a> &gt; &amp;entities, int roomNum, std::vector&lt; int &gt; &amp;bonus)</td></tr>
+<tr class="memdesc:ac87bdad0d5404ab20a6d2dbe5292ec87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновление игры  <br /></td></tr>
+<tr class="separator:ac87bdad0d5404ab20a6d2dbe5292ec87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f9d9da51db77e764501a7447db2cd7d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="control_8hpp.html#a2f9d9da51db77e764501a7447db2cd7d">playGame</a> (<a class="el" href="class_map.html">Map</a> &amp;map, <a class="el" href="class_map.html">Map</a> &amp;mapClear, <a class="el" href="class_player.html">Player</a> &amp;player, char input)</td></tr>
 <tr class="memdesc:a2f9d9da51db77e764501a7447db2cd7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контроль игры  <br /></td></tr>
 <tr class="separator:a2f9d9da51db77e764501a7447db2cd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ee55ac8993fb3160edf3668cec2fba4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="control_8hpp.html#a8ee55ac8993fb3160edf3668cec2fba4">win</a> ()</td></tr>
-<tr class="memdesc:a8ee55ac8993fb3160edf3668cec2fba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Победа в игре  <br /></td></tr>
-<tr class="separator:a8ee55ac8993fb3160edf3668cec2fba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a2f9d9da51db77e764501a7447db2cd7d" name="a2f9d9da51db77e764501a7447db2cd7d"></a>
@@ -160,22 +160,68 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ee55ac8993fb3160edf3668cec2fba4" name="a8ee55ac8993fb3160edf3668cec2fba4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ee55ac8993fb3160edf3668cec2fba4">&#9670;&#160;</a></span>win()</h2>
+<a id="ac87bdad0d5404ab20a6d2dbe5292ec87" name="ac87bdad0d5404ab20a6d2dbe5292ec87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac87bdad0d5404ab20a6d2dbe5292ec87">&#9670;&#160;</a></span>updateGame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void win </td>
+          <td class="memname">void updateGame </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_map.html">Map</a> &amp;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_map.html">Map</a> &amp;&#160;</td>
+          <td class="paramname"><em>mapClear</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_player.html">Player</a> &amp;&#160;</td>
+          <td class="paramname"><em>player</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_entity.html">Entity</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>entities</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>roomNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>bonus</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Победа в игре </p>
+<p>Обновление игры </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Карта подземелья </td></tr>
+    <tr><td class="paramname">mapClear</td><td>Очищенная карта подземелья </td></tr>
+    <tr><td class="paramname">player</td><td>Игрок </td></tr>
+    <tr><td class="paramname">entities</td><td>Сущности уровня </td></tr>
+    <tr><td class="paramname">roomNum</td><td>Номер комнаты </td></tr>
+    <tr><td class="paramname">bonus</td><td>Бонусное здоровье и бонусный урон </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

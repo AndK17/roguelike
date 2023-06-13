@@ -152,7 +152,7 @@ public:
     Entity *collisionWithEnemy(int dx, int dy, std::vector<Entity> &enemies);
 
     /// @brief Получение граничных сущностей
-    /// @param enemies  Сущности уровня
+    /// @param enemies Сущности уровня
     /// @return Сущности, которые граничат с игроком
     std::vector<Entity> neighbourWithEnemy(std::vector<Entity> &enemies);
 

@@ -10,6 +10,12 @@
 /// @return Случаейное число
 int random(int upper, int lower = 0);
 
+/// @brief Проверка на коллизии с другими сущностями
+/// @param x Есть ли левая дверь
+/// @param y Есть ли верхняя дверь
+/// @param entities Сущности
+/// @return Есть ли уже в ячейке с данными координатами сущность
+bool checkEnemyPos(int x, int y, std::vector<Entity> &entities);
 
 /// @brief Класс комнаты
 class Room {
