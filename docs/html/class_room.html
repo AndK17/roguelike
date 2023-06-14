@@ -168,16 +168,22 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ab40f3aae741c16cfe02bb1487b9e815b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#ab40f3aae741c16cfe02bb1487b9e815b">size</a> = <a class="el" href="namespaceglb.html#a862220dace372e8241c4308a6286c01c">glb::roomSize</a></td></tr>
+<tr class="memdesc:ab40f3aae741c16cfe02bb1487b9e815b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Размер комнаты  <br /></td></tr>
 <tr class="separator:ab40f3aae741c16cfe02bb1487b9e815b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49d080c2262a0a232bc347b7c04e6c47"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#a49d080c2262a0a232bc347b7c04e6c47">roomNum</a> = 0</td></tr>
+<tr class="memdesc:a49d080c2262a0a232bc347b7c04e6c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Порядковый номер комнаты  <br /></td></tr>
 <tr class="separator:a49d080c2262a0a232bc347b7c04e6c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a287be4ecfd6051ad74f7bf9742379a9c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#a287be4ecfd6051ad74f7bf9742379a9c">isFinish</a> = false</td></tr>
+<tr class="memdesc:a287be4ecfd6051ad74f7bf9742379a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Является ли комната последней  <br /></td></tr>
 <tr class="separator:a287be4ecfd6051ad74f7bf9742379a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83193f76c9afcf8053b7c8d54fb402e3"><td class="memItemLeft" align="right" valign="top">std::array&lt; bool, 4 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#a83193f76c9afcf8053b7c8d54fb402e3">doors</a></td></tr>
+<tr class="memdesc:a83193f76c9afcf8053b7c8d54fb402e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Массив дверей. Порядок: left, up, right, down.  <br /></td></tr>
 <tr class="separator:a83193f76c9afcf8053b7c8d54fb402e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176770e5596eb2228e73caf686f25b17"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; char &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#a176770e5596eb2228e73caf686f25b17">map</a></td></tr>
+<tr class="memdesc:a176770e5596eb2228e73caf686f25b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Карта комнаты  <br /></td></tr>
 <tr class="separator:a176770e5596eb2228e73caf686f25b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaeb088cc1494c2cae1761b5789770ad2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_entity.html">Entity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_room.html#aaeb088cc1494c2cae1761b5789770ad2">entities</a></td></tr>
+<tr class="memdesc:aaeb088cc1494c2cae1761b5789770ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Массив сущностей в комнате  <br /></td></tr>
 <tr class="separator:aaeb088cc1494c2cae1761b5789770ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -682,6 +688,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Массив дверей. Порядок: left, up, right, down. </p>
+
 </div>
 </div>
 <a id="aaeb088cc1494c2cae1761b5789770ad2" name="aaeb088cc1494c2cae1761b5789770ad2"></a>
@@ -703,6 +711,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Массив сущностей в комнате </p>
 
 </div>
 </div>
@@ -726,6 +736,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Является ли комната последней </p>
+
 </div>
 </div>
 <a id="a176770e5596eb2228e73caf686f25b17" name="a176770e5596eb2228e73caf686f25b17"></a>
@@ -747,6 +759,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Карта комнаты </p>
 
 </div>
 </div>
@@ -770,6 +784,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Порядковый номер комнаты </p>
+
 </div>
 </div>
 <a id="ab40f3aae741c16cfe02bb1487b9e815b" name="ab40f3aae741c16cfe02bb1487b9e815b"></a>
@@ -791,6 +807,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Размер комнаты </p>
 
 </div>
 </div>
