@@ -111,11 +111,24 @@ public:
     virtual void attack(Entity &other);
 
 protected:
-    int x, y;
+    /// @brief Координата по оси Ox (вертикаль)
+    int x;
+    /// @brief Координата по оси Oy (горизанталь)
+    int y;
+    /// @brief Отображаемый символ
     char symbol;
-    int health, damage, color;
+    /// @brief Здоровье
+    int health;
+    /// @ Наносимый урон
+    int damage;
+    /// @brief Цвет отображаемого символа
+    int color;
+    /// @brief Имя
     std::string name;
-    int bonusHealth, bonusDamage;
+    /// @brief Бонусное здоровье
+    int bonusHealth;
+    /// @brief Бонусный урон
+    int bonusDamage;
 };
 
 /// @brief Класс игрока
@@ -157,6 +170,7 @@ public:
     std::vector<Entity> neighbourWithEnemy(std::vector<Entity> &enemies);
 
 private:
+    /// @brief Максимальное здоровье
     int maxHealth;
 };
 
