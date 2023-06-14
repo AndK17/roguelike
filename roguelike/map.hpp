@@ -101,12 +101,17 @@ public:
     void generateChest();
 
 protected:
+    /// @brief Размер комнаты
     int size = glb::roomSize;
+    /// @brief Порядковый номер комнаты
     int roomNum = 0;
+    /// @brief Является ли комната последней
     bool isFinish = false;
-    // порядок: left, up, right, down
+    /// @brief Массив дверей. Порядок: left, up, right, down
     std::array<bool, 4> doors;
+    /// @brief Карта комнаты
     std::vector<std::vector<char>> map;
+    /// @brief Массив сущностей в комнате
     std::vector<Entity> entities;
 };
 
@@ -150,8 +155,14 @@ public:
 
 
 private:
+    /// @brief Длинна подземелья
     int len;
+    /// @brief Размер мартицы подземелья
     int size;
+    /// @brief Карта подземелья
     std::vector<std::vector<Room>> map;
-    int roomX, roomY;
+    /// @brief X координата комнаты в которой находитсья игрок
+    int roomX;
+    /// @brief Y координата комнаты в которой находитсья игрок
+    int roomY;
 };
