@@ -119,7 +119,7 @@ protected:
     char symbol;
     /// @brief Здоровье
     int health;
-    /// @ Наносимый урон
+    /// @brief Наносимый урон
     int damage;
     /// @brief Цвет отображаемого символа
     int color;

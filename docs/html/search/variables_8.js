@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['playersymbol_0',['playerSymbol',['../config_8hpp.html#ae8ea1c7bb3014c141221fa22db0ceff1',1,'playerSymbol:&#160;entities.cpp'],['../entities_8cpp.html#ae8ea1c7bb3014c141221fa22db0ceff1',1,'playerSymbol:&#160;entities.cpp']]]
+  ['name_0',['name',['../class_entity.html#a931b21fbdebb1a5963b4bcab5df128f5',1,'Entity']]]
 ];
