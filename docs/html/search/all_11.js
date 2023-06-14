@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wolf_0',['Wolf',['../class_wolf.html',1,'Wolf'],['../class_wolf.html#ad40c95254b416d6f23845624b021b224',1,'Wolf::Wolf()']]]
+  ['vampire_0',['Vampire',['../class_vampire.html',1,'Vampire'],['../class_vampire.html#a465a505cf22a7b3afdbd3b773cbb12a5',1,'Vampire::Vampire()']]]
 ];

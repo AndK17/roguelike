@@ -154,7 +154,7 @@ public:
     void setRoomY(int y);
 
 
-private:
+protected:
     /// @brief Длинна подземелья
     int len;
     /// @brief Размер мартицы подземелья
